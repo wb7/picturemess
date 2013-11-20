@@ -1,0 +1,8 @@
+<albums>
+  <album>
+    <title>Test</title>
+    <folder>test</folder>
+    <date>10.11.2013</date>
+    <description>A simple test album.</description>
+  </album>
+</albums>
