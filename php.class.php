@@ -70,6 +70,24 @@ class picturemess {
 
 	}
 
+	public function createHTML()
+	{
+	
+		// index file	
+	
+		$index_file = file_get_contents($this->dir . "tpl/index.tpl");
+		$index = "";		
+		
+		foreach($this->xml as $row)
+		{
+			$index .= $row->title . " - " . $row->desc . "<br />";		
+		}
+	
+		$index_file = str_replace("{LIST-DESC}", $index, $index_file);
+		echo $index_file;
+	
+	}
+
 }
 
 ?>
