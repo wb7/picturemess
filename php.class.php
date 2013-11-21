@@ -91,21 +91,36 @@ class picturemess {
 
 	}
 
+	private function templateStrings($tpl, $array)
+	{
+	
+		$file = file_get_contents($this->dir . "tpl/" . $tpl . ".tpl");
+		
+		foreach($array as $k => $v)
+		{
+			$file = str_replace("{" . $k . "}", $v, $file);		
+		}
+	
+		return $file;
+	
+	}
+
 	public function createHTML()
 	{
 	
-		// index file	
-	
-		$index_file = file_get_contents($this->dir . "tpl/index.tpl");
-		$index = "";		
+		// index file - tiles
+		$index = "";
 		
 		foreach($this->xml as $row)
 		{
-			$index .= $row->title . " - " . $row->desc . "<br />";		
+			$array = array('DESC' => $row->description,
+				'TITLE' => $row->title,
+				'PICTURE' => $row->date,
+			);
+			$index .= $this->templateStrings("index_tile", $array);
 		}
-	
-		$index_file = str_replace("{LIST-DESC}", $index, $index_file);
-		echo $index_file;
+
+		echo $index;
 	
 	}
 
