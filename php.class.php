@@ -29,23 +29,44 @@ class picturemess {
 
 	}
 
-	public function createFiles()
+	public function createFiles($album = "--all")
 	{
 		
 		foreach($this->xml as $row)
 		{
-			$content = "<album>\r\n";
-			$content .= $this->createDescXML($this->dir . "images/" . $row->folder);
-			$content .= "</album>";	
-
-			if(@$handle = fopen($this->dir . "desc/" . $row->folder . ".xml", "w"))
+			if ($album == "--all")
 			{
-				fwrite($handle, $content);
-				fclose($handle);
-				echo "(Over-)wrote description files for album \"" . $row->title . "\".\r\n";			
+				$content = "<album>\r\n";
+				$content .= $this->createDescXML($this->dir . "images/" . $row->folder);
+				$content .= "</album>";
+
+				if(@$handle = fopen($this->dir . "desc/" . $row->folder . ".xml", "w"))
+				{
+					fwrite($handle, $content);
+					fclose($handle);
+					echo "(Over-)wrote description files for album \"" . $row->title . "\".\r\n";			
+				}				
+				
 			}
-			
+			else
+			{
+				if($row->folder == $album)
+				{
+					$content = "<album>\r\n";
+					$content .= $this->createDescXML($this->dir . "images/" . $row->folder);
+					$content .= "</album>";
+				
+					if(@$handle = fopen($this->dir . "desc/" . $row->folder . ".xml", "w"))
+					{
+						fwrite($handle, $content);
+						fclose($handle);
+						echo "(Over-)wrote description files for album \"" . $row->title . "\".\r\n";			
+					}				
+				}
+			}
 		}
+	
+		if ($album == ""){echo "Please give one album or --all as argument.\r\n";}
 	
 	}
 
