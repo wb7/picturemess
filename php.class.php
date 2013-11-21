@@ -140,8 +140,10 @@ class picturemess {
 		
 		foreach($this->xml as $row)
 		{
-			$array = array('DESCRIPTION' => $row->description,
+			$array = array(
+				'DESCRIPTION' => $row->description,
 				'TITLE' => $row->title,
+				'LINK' => $row->folder . ".html",
 			);
 			$index .= $this->templateStrings("index_tile", $array);
 		}
@@ -154,6 +156,33 @@ class picturemess {
 		fclose($handle);
 		echo "Wrote index.html.\r\n";
 		// END index file
+		
+		// START gallery page
+		foreach($this->xml as $row)
+		{
+			$pictures = "";
+			
+			$xml = simplexml_load_file($this->dir . "desc/" . $row->folder . ".xml");
+			
+			foreach($xml as $file)
+			{
+				$pictures .= $file->filename . "<br />";
+				$pictures .= $file->description . "<br />";			
+			}			
+			
+			$array = array(
+				'TITLE' => $row->title,
+				'DESCRIPTION' => $row->description,
+				'PICTURES' => $pictures,
+			);
+
+			$page = $this->templateStrings("page", $array);
+			echo $page;			
+			
+		}		
+				
+		
+		// END gallery page		
 		
 	}
 
