@@ -1,3 +1,4 @@
+#!/usr/bin/php5
 <?php
 
 include('php.class.php');
@@ -16,6 +17,6 @@ if ($init){echo "albums.xml loaded.\n";}else{echo "Something went wrong! :("; di
 if ($argv[1] == "--create-files"){$pm->createFiles($argv[2]);}
 
 // export html
-if ($argv[1] == "--export"){$pm->createHTML();}
+if ($argv[1] == "--export"){$pm->create();}
 
 ?>

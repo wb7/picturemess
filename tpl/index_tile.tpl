@@ -1,3 +1,4 @@
-{PICTURE}<br />
-{TITLE}<br /><i>{DESC}</i>
+{TITLE}<br />
+<i>{DESCRIPTION}</i>
+<hr />
 

@@ -91,6 +91,20 @@ class picturemess {
 
 	}
 
+	private function getFooter()
+	{
+	
+		$time = date("d.m.Y H:i");
+		$year = date("Y");
+		
+		$file = file_get_contents($this->dir . "tpl/footer.tpl");
+		$file = str_replace("{YEAR}", $year, $file);
+		$file = str_replace("{TIME}", $time, $file);
+		
+		return $file;
+	
+	}
+
 	private function templateStrings($tpl, $array)
 	{
 	
@@ -101,27 +115,46 @@ class picturemess {
 			$file = str_replace("{" . $k . "}", $v, $file);		
 		}
 	
+		$file = str_replace("{FOOTER}", $this->getFooter(), $file);
 		return $file;
 	
 	}
 
-	public function createHTML()
+	public function create()
 	{
 	
-		// index file - tiles
+		// create and copy html files
+		$this->createHTML();	
+		
+		// create and copy image files
+		
+		// create and copy other included files
+	
+	}
+
+	private function createHTML()
+	{
+	
+		// START index file
 		$index = "";
 		
 		foreach($this->xml as $row)
 		{
-			$array = array('DESC' => $row->description,
+			$array = array('DESCRIPTION' => $row->description,
 				'TITLE' => $row->title,
-				'PICTURE' => $row->date,
 			);
 			$index .= $this->templateStrings("index_tile", $array);
 		}
-
-		echo $index;
-	
+		
+		$index = array('LIST' => $index);
+		$index = $this->templateStrings("index", $index);
+		
+		$handle = fopen($this->dir . "output/index.html", "w");
+		fwrite($handle, $index);
+		fclose($handle);
+		echo "Wrote index.html.\r\n";
+		// END index file
+		
 	}
 
 }
