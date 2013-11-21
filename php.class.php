@@ -123,10 +123,18 @@ class picturemess {
 	public function create()
 	{
 	
+		if(file_exists($this->dir . "output"))
+		{
+			//remove old directory
+		}	
+	
+		//mkdir($this->dir . "output");	
+	
 		// create and copy html files
 		$this->createHTML();	
 		
 		// create and copy image files
+		$this->copyImages();
 		
 		// create and copy other included files
 	
@@ -177,13 +185,45 @@ class picturemess {
 			);
 
 			$page = $this->templateStrings("page", $array);
-			echo $page;			
+			
+			$handle = fopen($this->dir . "output/" . $row->folder . ".html", "w");
+			fwrite($handle, $page);
+			fclose($handle);		
+			echo "Wrote " . $row->folder . ".html.\r\n";
 			
 		}		
 				
 		
 		// END gallery page		
 		
+	}
+
+	private function copyImages()
+	{
+	
+		if(!file_exists($this->dir . "output/images/"))
+		{
+			mkdir($this->dir . "output/images");		
+		}
+	
+		foreach($this->xml as $row)
+		{
+			
+			$xml = simplexml_load_file($this->dir . "desc/" . $row->folder . ".xml");
+			
+			foreach($xml as $file)
+			{
+				if(!file_exists($this->dir . "output/images/" . $row->folder))
+				{
+					mkdir($this->dir . "output/images/" . $row->folder);
+				}
+
+				copy($this->dir . "images/" . $row->folder . "/" . $file->filename, $this->dir . "output/images/" . $row->folder . "/" . $file->filename);						
+			
+			}
+		
+		}
+	
 	}
 
 }
