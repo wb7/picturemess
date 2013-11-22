@@ -1,7 +1,7 @@
 {INCLUDES}
-<!--{TITLE}<br />
+<h1>{TITLE}</h1><br />
 <i>{DESCRIPTION}</i>
-<br />-->
+<br />
 {PICTURES}
 <hr />
 {FOOTER}

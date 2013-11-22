@@ -226,6 +226,7 @@ class picturemess {
 				$array = array(
 					'FOLDER' => $row->folder,
 					'FILENAME' => $file->filename,
+					'DESCRIPTION' => $file->description,
 				);
 
 				$pictures .= $this->templateStrings("page_tile", $array);				
