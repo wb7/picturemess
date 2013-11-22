@@ -1,6 +1,7 @@
-{TITLE}<br />
+{INCLUDES}
+<!--{TITLE}<br />
 <i>{DESCRIPTION}</i>
-<br />
+<br />-->
 {PICTURES}
 <hr />
 {FOOTER}

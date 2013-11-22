@@ -105,6 +105,15 @@ class picturemess {
 	
 	}
 
+	private function getIncludes()
+	{
+		
+		$file = file_get_contents($this->dir . "tpl/inc.tpl");
+		
+		return $file;
+	
+	}
+
 	private function templateStrings($tpl, $array)
 	{
 	
@@ -115,6 +124,7 @@ class picturemess {
 			$file = str_replace("{" . $k . "}", $v, $file);		
 		}
 	
+		$file = str_replace("{INCLUDES}", $this->getIncludes(), $file);
 		$file = str_replace("{FOOTER}", $this->getFooter(), $file);
 		return $file;
 	
@@ -156,10 +166,10 @@ class picturemess {
 							unlink($this->dir . "output/" . $row . "/" . $file);						
 						}
 					}
-						rmdir($this->dir . "output/" . $row);
-					}else {
-						unlink($this->dir . "output/" . $row);
-					}
+					rmdir($this->dir . "output/" . $row);
+				}else {
+					unlink($this->dir . "output/" . $row);
+				}
 			}
 			rmdir($this->dir . "output");
 			echo "Old files deleted.\r\n";
@@ -213,9 +223,13 @@ class picturemess {
 			
 			foreach($xml as $file)
 			{
-				$pictures .= "<img src=\"thumbs/" . $row->folder . "/" . $file->filename . "\" /><br />";
-				$pictures .= $file->filename . "<br />";
-				$pictures .= $file->description . "<br />";			
+				$array = array(
+					'FOLDER' => $row->folder,
+					'FILENAME' => $file->filename,
+				);
+
+				$pictures .= $this->templateStrings("page_tile", $array);				
+				
 			}			
 			
 			$array = array(
