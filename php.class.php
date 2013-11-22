@@ -149,10 +149,14 @@ class picturemess {
 							{
 								unlink($this->dir . "output/" . $row . "/" . $file . "/" . $fold);				
 							}
+							rmdir($this->dir . "output/" . $row . "/" . $file);
 						}
-						rmdir($this->dir . "output/" . $row . "/" . $file);
+						else
+						{
+							unlink($this->dir . "output/" . $row . "/" . $file);						
+						}
 					}
-					rmdir($this->dir . "output/" . $row);
+						rmdir($this->dir . "output/" . $row);
 					}else {
 						unlink($this->dir . "output/" . $row);
 					}
@@ -170,6 +174,7 @@ class picturemess {
 		$this->copyImages();
 		
 		// create and copy other included files
+		$this->copyFiles();
 		
 		echo "Done.\r\n";
 	}
@@ -208,6 +213,7 @@ class picturemess {
 			
 			foreach($xml as $file)
 			{
+				$pictures .= "<img src=\"thumbs/" . $row->folder . "/" . $file->filename . "\" /><br />";
 				$pictures .= $file->filename . "<br />";
 				$pictures .= $file->description . "<br />";			
 			}			
@@ -240,6 +246,11 @@ class picturemess {
 			mkdir($this->dir . "output/images");		
 		}
 	
+		if(!file_exists($this->dir . "output/thumbs/"))
+		{
+			mkdir($this->dir . "output/thumbs");		
+		}
+	
 		foreach($this->xml as $row)
 		{
 			
@@ -250,14 +261,66 @@ class picturemess {
 				if(!file_exists($this->dir . "output/images/" . $row->folder))
 				{
 					mkdir($this->dir . "output/images/" . $row->folder);
+					mkdir($this->dir . "output/thumbs/" . $row->folder);
 					echo "Created directory output/images/" . $row->folder . ".\r\n";
 				}
 
 				copy($this->dir . "images/" . $row->folder . "/" . $file->filename, $this->dir . "output/images/" . $row->folder . "/" . $file->filename);
 				echo "Copied image " . $row->folder . "/" . $file->filename . ".\r\n";
+				
+				$filename = $this->dir . "images/" . $row->folder . "/" . $file->filename;
+				$file_info = pathinfo($filename);
+				$width = 150;
+				list($width_orig, $height_orig) = getimagesize($filename);
+				$ratio_orig = $width_orig/$height_orig;
+				$height = $width/$ratio_orig;
+
+				$image_p = imagecreatetruecolor($width, $height);
+
+				if($file_info['extension'] == "jpeg" OR $file_info['extension'] == "jpg" OR $file_info['extension'] == "JPG" OR $file_info['extension'] == "JPEG")
+				{
+					$image = imagecreatefromjpeg($filename);
+				}
+				elseif($file_info['extension'] == "png" OR $file_info['extension'] == "PNG")
+				{
+					$image = imagecreatefrompng($filename);
+				}
+			
+				imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
+				imagejpeg($image_p, $this->dir . "output/thumbs/" . $row->folder . "/" . $file->filename, 95);
 			
 			}
 		
+		}
+	
+	}
+
+	private function copyFiles()
+	{
+
+		$dir = scandir($this->dir . "inc");
+		unset($dir[0]);
+		unset($dir[1]);
+		
+		foreach($dir as $row)
+		{
+			if(filetype($this->dir . "inc/" . $row) != "dir")
+			{
+				copy($this->dir . "inc/" . $row, $this->dir . "output/" . $row);
+				echo "Copied " . $row . ".\r\n";
+			}
+			else
+			{
+				mkdir($this->dir . "output/" . $row);
+				$folder = scandir($this->dir . "inc/" . $row);
+				unset($folder[0]);
+				unset($folder[1]);
+				foreach($folder as $fold)
+				{
+					copy($this->dir . "inc/" . $row . "/" . $fold, $this->dir . "output/" . $row . "/" . $fold);
+					echo "Copied " . $row . "/" . $fold . ".\r\n";		
+				}
+			}
 		}
 	
 	}
