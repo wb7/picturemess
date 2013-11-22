@@ -125,10 +125,43 @@ class picturemess {
 	
 		if(file_exists($this->dir . "output"))
 		{
-			//remove old directory
+			$dir = scandir($this->dir . "output");
+
+			unset($dir[0]);
+			unset($dir[1]);
+
+			foreach($dir as $row)
+			{
+				if(filetype($this->dir . "output/" . $row) == "dir")
+				{
+					$files = scandir($this->dir . "output/" . $row);
+					unset($files[0]);
+					unset($files[1]);
+		
+					foreach($files as $file)
+					{
+						if(filetype($this->dir . "output/" . $row . "/" . $file) == "dir")
+						{
+							$folder = scandir($this->dir . "output/" . $row . "/" . $file);
+							unset($folder[0]);
+							unset($folder[1]);
+							foreach($folder as $fold)
+							{
+								unlink($this->dir . "output/" . $row . "/" . $file . "/" . $fold);				
+							}
+						}
+						rmdir($this->dir . "output/" . $row . "/" . $file);
+					}
+					rmdir($this->dir . "output/" . $row);
+					}else {
+						unlink($this->dir . "output/" . $row);
+					}
+			}
+			rmdir($this->dir . "output");
+			echo "Old files deleted.\r\n";
 		}	
 	
-		//mkdir($this->dir . "output");	
+		mkdir($this->dir . "output");	
 	
 		// create and copy html files
 		$this->createHTML();	
@@ -137,7 +170,8 @@ class picturemess {
 		$this->copyImages();
 		
 		// create and copy other included files
-	
+		
+		echo "Done.\r\n";
 	}
 
 	private function createHTML()
@@ -216,9 +250,11 @@ class picturemess {
 				if(!file_exists($this->dir . "output/images/" . $row->folder))
 				{
 					mkdir($this->dir . "output/images/" . $row->folder);
+					echo "Created directory output/images/" . $row->folder . ".\r\n";
 				}
 
-				copy($this->dir . "images/" . $row->folder . "/" . $file->filename, $this->dir . "output/images/" . $row->folder . "/" . $file->filename);						
+				copy($this->dir . "images/" . $row->folder . "/" . $file->filename, $this->dir . "output/images/" . $row->folder . "/" . $file->filename);
+				echo "Copied image " . $row->folder . "/" . $file->filename . ".\r\n";
 			
 			}
 		
