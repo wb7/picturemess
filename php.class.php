@@ -332,14 +332,28 @@ class picturemess {
 				unset($folder[1]);
 				foreach($folder as $fold)
 				{
+					
+					if(filetype($this->dir . "inc/" . $row . "/" . $fold) == "file") {
 					copy($this->dir . "inc/" . $row . "/" . $fold, $this->dir . "output/" . $row . "/" . $fold);
 					echo "Copied " . $row . "/" . $fold . ".\r\n";		
+					}
+					else
+					{
+						$temp = scandir($this->dir . "inc/" . $row . "/" . $fold);
+						unset($temp[0]);
+						unset($temp[1]);
+
+						mkdir($this->dir . "output/" . $row . "/" . $fold);					
+					
+						foreach($temp as $value)
+						{
+							copy($this->dir . "inc/" . $row . "/" . $fold . "/" . $value, $this->dir . "output/" . $row . "/" . $fold . "/" . $value);					
+							echo "Copied " . $row . "/" . $fold . "/" . $value . ".\r\n";
+						}
+					}
 				}
 			}
 		}
-	
 	}
-
 }
-
 ?>
