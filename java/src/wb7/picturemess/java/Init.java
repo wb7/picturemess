@@ -40,7 +40,12 @@ public class Init {
 			NodeList widthNodeList = doc.getElementsByTagName("width");
 			Element widthElement = (Element) widthNodeList.item(0);
 			NodeList widthChildNodes = widthElement.getChildNodes();
-			width = Integer.parseInt(((Node) widthChildNodes.item(0)).getNodeValue());
+			try{
+				width = Integer.parseInt(((Node) widthChildNodes.item(0)).getNodeValue());
+			}catch (NumberFormatException e) {
+				e.printStackTrace();
+				System.err.println("The width \"" + width + "\" is no Integer.");
+			}
 			
 		}catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
@@ -107,6 +112,8 @@ public class Init {
 			return false;
 		}
 		
+		System.out.println(fileXML.getName() + " loded.");
+		
 		return true;
 	}
 	
@@ -151,7 +158,7 @@ public class Init {
 				
 			}
 		
-		} catch (Exception e) {
+		} catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
 			return false;
 		}

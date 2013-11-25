@@ -22,15 +22,16 @@ public class CreateFiles {
 		
 	}
 
-	public void createFiles(String album) {
+	public boolean createFiles(String album) {
 
 		if(album.equalsIgnoreCase("--all")){
 			
 			for (String folder : folderTitleMap.keySet()) {
-				createFiles(folder);
+				if(!createFiles(folder))
+					return false;
 			}
 			
-			return;
+			return true;
 			
 		}
 		
@@ -42,13 +43,9 @@ public class CreateFiles {
 			
 			String filename = file.getName();
 			
-			System.out.println(album + " " +filename);
-			
 			if(fileDescrMap.get(album).containsKey(filename)){
 				newFileDescrMap.put(filename, fileDescrMap.get(album).get(filename));
 
-
-			System.out.println(fileDescrMap.get(album).containsKey(filename));
 			}else{
 				newFileDescrMap.put(filename, "");
 			}
@@ -75,7 +72,12 @@ public class CreateFiles {
 		
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
+		
+		System.out.println(album + ".xml created / changed.");
+		
+		return true;
 		
 	}
 	

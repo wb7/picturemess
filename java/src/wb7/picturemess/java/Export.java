@@ -31,22 +31,39 @@ public class Export {
 		
 	}
 	
-	public void export() {
+	public boolean export() {
+		
+		System.out.println("export files");
+		System.out.println();
 		
 		File output = new File(path + "output/");
-		if(output.exists())
+		if(output.exists()){
 			delete(output);
+			System.out.println("Old files deleted.");
+			System.out.println();
+		}
 		
-		copy(new File(path + "inc/"), output.getAbsolutePath());
-		copyImages();
+		System.out.println("copy includes");
+		if(!copy(new File(path + "inc/"), output.getAbsolutePath()))
+			return false;
+		System.out.println("All includes copied.");
+		System.out.println();
 		
-		createHtml();
+		if(!copyImages())
+			return false;
 		
-		System.out.println("Finish!");
+		if(!createHtml())
+			return false;
+		
+		System.out.println("exported files");
+		
+		return true;
 		
 	}
 
-	private void createHtml() {
+	private boolean createHtml() {
+		
+		System.out.println("creat htmls");
 		
 		String footer = getFooter();
 		String includes = getIncludes();
@@ -75,7 +92,10 @@ public class Export {
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
+		
+		System.out.println("output/index.html created.");
 		
 		for (String album : folderTitleMap.keySet()) {
 			
@@ -110,9 +130,17 @@ public class Export {
 				
 			} catch (IOException e) {
 				e.printStackTrace();
+				return false;
 			}
 			
+			System.out.println("output/" + album + ".html created.");
+			
 		}
+		
+		System.out.println("created htmls");
+		System.out.println();
+		
+		return true;
 		
 	}
 
@@ -242,23 +270,31 @@ public class Export {
 		return returnString;
 	}
 
-	private void copy(File file, String to) {
+	private boolean copy(File file, String to) {
 		
 		try {
 			Files.copy(file.toPath(), (new File(to)).toPath());
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
+		
+		System.out.println(file.getName() + " copied.");
 		
 		if(file.isDirectory())
 			for (File otherFile : file.listFiles()) {
 				String fileString = to + "/" + otherFile.getName();
-				copy(otherFile, fileString);
+				if(!copy(otherFile, fileString))
+					return false;
 			}
+		
+		return true;
 		
 	}
 	
-	private void copyImages(){
+	private boolean copyImages(){
+		
+		System.out.println("copy images");
 		
 		new File(path + "output/images/").mkdir();
 		new File(path + "output/thumbs/").mkdir();
@@ -272,14 +308,22 @@ public class Export {
 				
 				try {
 					Files.copy((new File(path + "images/" + album + "/" + file)).toPath(), (new File(path + "output/images/" + album + "/" + file)).toPath());
+					System.out.println("images/" + album + "/" + file + " copied.");
+					
 					scale(new File(path + "images/" + album + "/" + file), new File(path + "output/thumbs/" + album + "/" + file));
+					System.out.println("images/" + album + "/" + file + " scaled and copied.");
 				} catch (IOException e) {
 					e.printStackTrace();
+					return false;
 				}
 				
 			}
 			
 		}
+		System.out.println("copied images");
+		System.out.println();
+		
+		return true;
 		
 	}
 		  
