@@ -1,14 +1,8 @@
 <albums>
   <album>
-    <title>Test</title>
-    <folder>test</folder>
-    <date>10.11.2013</date>
-    <description>A simple test album.</description>
-  </album>
-  <album>
-    <title>Computer</title>
-    <folder>Computer</folder>
-    <date>32.5.3179</date>
-    <description>My hobby.</description>
+    <title>My pictures</title>
+    <folder>mypics</folder>
+    <date>25th November 2013</date>
+    <description>Some pictures from me.</description>
   </album>
 </albums>

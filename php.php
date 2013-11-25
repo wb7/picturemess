@@ -1,4 +1,3 @@
-#!/usr/bin/php5
 <?php
 
 include('php.class.php');
