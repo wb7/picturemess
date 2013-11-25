@@ -1,0 +1,2 @@
+Start (Windows):
+	java Main
