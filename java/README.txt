@@ -16,3 +16,5 @@ Compile for gui:
 Start for only core:
 	cd bin
 	java bin\Main_gui
+
+The options to "compile" the java version of picturemess are the same under linux environments. As far we have tested.
