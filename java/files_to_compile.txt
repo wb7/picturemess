@@ -1,4 +1,0 @@
-src_no_gui/Main.java
-src_no_gui/wb7/picturemess/java/Init.java
-src_no_gui/wb7/picturemess/java/Export.java
-src_no_gui/wb7/picturemess/java/CreateFiles.java

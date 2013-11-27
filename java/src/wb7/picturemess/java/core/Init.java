@@ -1,4 +1,4 @@
-package wb7.picturemess.java;
+package wb7.picturemess.java.core;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class Init {
 		
 		try{
 		
-			File file = new File("config.xml");
+			File file = new File("../config.xml");
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = dbf.newDocumentBuilder();
 			Document doc = builder.parse(file);
@@ -36,6 +36,7 @@ public class Init {
 			Element pathElement = (Element) pathNodeList.item(0);
 			NodeList pathChildNodes = pathElement.getChildNodes();
 			path = ((Node) pathChildNodes.item(0)).getNodeValue();
+			path = "../" + path;
 			
 			NodeList widthNodeList = doc.getElementsByTagName("width");
 			Element widthElement = (Element) widthNodeList.item(0);

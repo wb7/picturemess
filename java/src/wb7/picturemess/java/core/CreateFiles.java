@@ -1,4 +1,4 @@
-package wb7.picturemess.java;
+package wb7.picturemess.java.core;
 
 import java.io.BufferedWriter;
 import java.io.File;

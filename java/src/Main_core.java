@@ -1,10 +1,10 @@
 import java.util.HashMap;
 
-import wb7.picturemess.java.CreateFiles;
-import wb7.picturemess.java.Export;
-import wb7.picturemess.java.Init;
+import wb7.picturemess.java.core.CreateFiles;
+import wb7.picturemess.java.core.Export;
+import wb7.picturemess.java.core.Init;
 
-public class Main {
+public class Main_core {
 
 	private static String path = "";
 	private static int width = 0;
