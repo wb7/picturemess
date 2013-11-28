@@ -355,5 +355,33 @@ class picturemess {
 			}
 		}
 	}
+
+	public function createAlbum($folder) {
+	
+		if (!file_exists($this->dir . "images/" . $folder)){
+			$file = file_get_contents($this->dir . "albums.xml");
+			$file = str_replace("</albums>", "", $file);
+		
+			$block = "  <album>\r\n";
+			$block .= "    <title>New Album - " . $folder . "</title>\r\n";
+			$block .= "    <folder>" . $folder . "</folder>\r\n";
+			$block .= "    <date>" . date("d F Y") . "</date>\r\n";
+			$block .= "    <description>An awesome album with great pictures.</description>\r\n";
+			$block .= "  </album>\r\n";
+		
+			$block .= "</albums>";
+
+			$handle = fopen($this->dir . "albums.xml", "w");
+			fwrite($handle, $file . $block);
+			
+			mkdir($this->dir . "images/" . $folder);
+			echo "Created folder and album '" . $folder . "' successful.\r\n";
+		}
+		else {
+			echo "Folder already exists!\r\n";
+		}
+	}
+
+
 }
 ?>

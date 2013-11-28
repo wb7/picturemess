@@ -15,6 +15,9 @@ if ($init){echo "albums.xml loaded.\n";}else{echo "Something went wrong! :("; di
 // check if user wants to create desc files for each album
 if ($argv[1] == "--create-files"){$pm->createFiles($argv[2]);}
 
+// check if user wants to create new album
+if ($argv[1] == "--create-album"){$pm->createAlbum($argv[2]);}
+
 // export html
 if ($argv[1] == "--export"){$pm->create();}
 
