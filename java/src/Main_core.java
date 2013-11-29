@@ -1,5 +1,6 @@
 import java.util.HashMap;
 
+import wb7.picturemess.java.core.CreateAlbum;
 import wb7.picturemess.java.core.CreateFiles;
 import wb7.picturemess.java.core.Export;
 import wb7.picturemess.java.core.Init;
@@ -25,16 +26,32 @@ public class Main_core {
 		if(args[0].equalsIgnoreCase("--create-files")){
 			if(args.length >= 2){
 				CreateFiles createFiles = new CreateFiles(path, fileDescrMap, folderTitleMap);
-				if(createFiles.createFiles(args[1])){
+				if(createFiles.createFiles(args[1]))
 					System.out.println("Created / changed xml files.");
-				}else{
+				else
 					System.err.println("Something went wrong while creating files! :(");
-				}
 			}else
 				System.err.println("Please give one album or --all as argument.");
 		}else if(args[0].equalsIgnoreCase("--export")){
 			Export export = new Export(path, fileDescrMap, folderTitleMap, width);
-			export.export();
+			if(export.export())
+				System.out.println("Exported files to output.");
+			else
+				System.err.println("Something went wrong while exporting files! :(");
+		}else if(args[0].equalsIgnoreCase("--create-album")){
+			CreateAlbum createAlbum = new CreateAlbum(path, folderTitleMap);
+			if(args.length > 1){
+				String title;
+				if(args.length > 2)
+					title = args[2];
+				else
+					title = null;
+				if(createAlbum.createAlbum(args[1], title))
+					System.out.println("Created album " + args[1] + ".");
+				else
+					System.err.println("Something went wrong while creating an album! :(");
+			}else
+				System.err.println("Please give an folder to create the album there.");
 		}
 		
 	}

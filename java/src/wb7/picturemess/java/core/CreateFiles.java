@@ -66,7 +66,7 @@ public class CreateFiles {
 				writer.write("  </file>\n");
 			}
 			
-			writer.write("</album>");
+			writer.write("</album>\n");
 		
 			writer.close();
 		
