@@ -13,14 +13,14 @@ import org.w3c.dom.NodeList;
 public class Init {
 
 	//The path to the directory with albums.xml, /desc etc.
-	public static String path = "";
+	public String path = "";
 	//The width of the thumbnails.
-	public static int width = 0;
+	public int width = 0;
 	
 	//The content of the albums.xml ordered by the directory-name. The Srting[] contains title, time and description.
-	public static HashMap<String, String[]> folderTitleMap = new HashMap<>();
+	public HashMap<String, String[]> folderTitleMap = new HashMap<>();
 	//All xmls in /desc ordered by the album-directory-name and it contains a map witch ordered by the picture-name and contain the description
-	public static HashMap<String, HashMap<String, String>> fileDescrMap = new HashMap<>();
+	public HashMap<String, HashMap<String, String>> fileDescrMap = new HashMap<>();
 	
 	public boolean loadConfig() {
 		

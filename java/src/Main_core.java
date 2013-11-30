@@ -101,10 +101,10 @@ public class Main_core {
 		//A clear line for better structure.
 		System.out.println();
 		
-		path = Init.path;
-		width = Init.width;
-		fileDescrMap = Init.fileDescrMap;
-		folderTitleMap = Init.folderTitleMap;
+		path = init.path;
+		width = init.width;
+		fileDescrMap = init.fileDescrMap;
+		folderTitleMap = init.folderTitleMap;
 		
 	}
 	
