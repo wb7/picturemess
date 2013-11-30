@@ -69,7 +69,7 @@ public class Init {
 			
 		}
 		
-		File fileXML = new File(path + "desc\\" + xml + ".xml");
+		File fileXML = new File(path + "desc/" + xml + ".xml");
 		
 		if(!fileXML.exists())
 			return true;

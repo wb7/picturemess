@@ -37,7 +37,7 @@ public class CreateFiles {
 		
 		HashMap<String, String> newFileDescrMap = new HashMap<>();
 		
-		File folder = new File(path + "images\\" + album + "\\");
+		File folder = new File(path + "images/" + album + "/");
 		
 		for (File file : folder.listFiles()) {
 			
@@ -54,7 +54,7 @@ public class CreateFiles {
 		
 		try {
 			
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(path + "desc\\" + album + ".xml")));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(path + "desc/" + album + ".xml")));
 		
 			writer.write("<album>\n");
 			
