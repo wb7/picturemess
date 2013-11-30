@@ -7,7 +7,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,10 +16,15 @@ import javax.imageio.ImageIO;
 
 public class Export {
 
-	private HashMap<String, String[]> folderTitleMap;
-	private HashMap<String, HashMap<String, String>> fileDescrMap;
-	private String path;
-	private int width;
+	//The path to the directory with albums.xml, /desc etc.
+	private String path = "";
+	//The width of the thumbnails.
+	private int width = 0;
+	
+	//The content of the albums.xml ordered by the directory-name. The Srting[] contains title, time and description.
+	private HashMap<String, String[]> folderTitleMap = new HashMap<>();
+	//All xmls in /desc ordered by the album-directory-name and it contains a map witch ordered by the picture-name and contain the description
+	private HashMap<String, HashMap<String, String>> fileDescrMap = new HashMap<>();
 
 	public Export(String path, HashMap<String, HashMap<String, String>> fileDescrMap, HashMap<String, String[]> folderTitleMap, int width) {
 		
@@ -33,9 +37,11 @@ public class Export {
 	
 	public boolean export() {
 		
+		//Outputs start message
 		System.out.println("export files");
 		System.out.println();
 		
+		//Deletes /output if it exists
 		File output = new File(path + "output/");
 		if(output.exists()){
 			delete(output);
@@ -43,18 +49,22 @@ public class Export {
 			System.out.println();
 		}
 		
+		//Copies the /inc folder
 		System.out.println("copy includes");
 		if(!copy(new File(path + "inc/"), output.getAbsolutePath()))
 			return false;
 		System.out.println("All includes copied.");
 		System.out.println();
 		
+		//Copies and scales the includes
 		if(!copyImages())
 			return false;
 		
+		//Generate the html files
 		if(!createHtml())
 			return false;
 		
+		//Outputs an message of success
 		System.out.println("exported files");
 		
 		return true;
@@ -63,56 +73,72 @@ public class Export {
 
 	private boolean createHtml() {
 		
+		//Outputs start message
 		System.out.println("creat htmls");
 		
+		//Gets the footer and the include
 		String footer = getFooter();
 		String includes = getIncludes();
 		
+		//Gets the list of albums
 		String list = getList();
 		
 		try {
 			
+			//Opens a writer and a reader
 			BufferedReader reader = new BufferedReader(new FileReader(new File(path + "tpl/index.tpl")));
 			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(path + "output/index.html")));
 			
+			//Writes the lines from the tpl/index.tpl to the output/index.html using a loop
 			String line;
 			while ((line = reader.readLine()) != null) {
 			
+				//Replaces the include, the footers and the list
 				line = line.replace("{INCLUDES}", includes);
 				line = line.replace("{FOOTER}", footer);
 				line = line.replace("{LIST}", list);
 				
+				//Writes the (replaced)line
 				writer.write(line);
 				writer.newLine();
 			
 			}
 			
+			//Closes reader and writer
 			reader.close();
 			writer.close();
 			
-		} catch (IOException e) {
+		} catch (Exception e) {
+			//Catches all errors
 			e.printStackTrace();
 			return false;
 		}
 		
+		//Outputs an message of success
 		System.out.println("output/index.html created.");
 		
+		//A loop to write htmls for all albums
 		for (String album : folderTitleMap.keySet()) {
 			
+			//Gets the title, the date and the description form the folderTitleMap
 			String title = folderTitleMap.get(album)[0];
 			String date = folderTitleMap.get(album)[1];
 			String description = folderTitleMap.get(album)[2];
-					
+			
+			//Gets the picture part for this album
 			String pictures = getPictures(album);
 			
 			try {
 				
+				//Opens a writer and a reader
 				BufferedReader reader = new BufferedReader(new FileReader(new File(path + "tpl/page.tpl")));
 				BufferedWriter writer = new BufferedWriter(new FileWriter(new File(path + "output/" + album + ".html")));
 				
+				//Writes the lines from the tpl/page.tpl to the output/<album>.html using a loop
 				String line;
 				while ((line = reader.readLine()) != null) {
 				
+					//Replaces the include, the footers etc.
 					line = line.replace("{INCLUDES}", includes);
 					line = line.replace("{FOOTER}", footer);
 					line = line.replace("{TITLE}", title);
@@ -120,23 +146,28 @@ public class Export {
 					line = line.replace("{DESCRIPTION}", description);
 					line = line.replace("{PICTURES}", pictures);
 					
+					//Writes the (replaced)line
 					writer.write(line);
 					writer.newLine();
 				
 				}
 				
+				//Closes reader and writer
 				reader.close();
 				writer.close();
 				
-			} catch (IOException e) {
+			} catch (Exception e) {
+				//Catches all errors
 				e.printStackTrace();
 				return false;
 			}
 			
+			//Outputs an message of success
 			System.out.println("output/" + album + ".html created.");
 			
 		}
 		
+		//Outputs an message of success
 		System.out.println("created htmls");
 		System.out.println();
 		
@@ -148,29 +179,37 @@ public class Export {
 		
 		String returnString = "";
 		
+		//A loop to read a list with all albums
 		for (String album : fileDescrMap.keySet()) {
 			
+			//Gets the title and the description
 			String title = folderTitleMap.get(album)[0];
 			String description = folderTitleMap.get(album)[2];
 			
 			try {
 				
+				//Opens and a reader
 				BufferedReader reader = new BufferedReader(new FileReader(new File(path + "tpl/index_tile.tpl")));
 				
+				//Reads the lines from the tpl/index_tile.tpl using a loop
 				String line;
 				while ((line = reader.readLine()) != null) {
 					
+					//Replaces the title, the link to the <album>.html, etc.
 					line = line.replace("{TITLE}", title);
 					line = line.replace("{LINK}", album + ".html");
 					line = line.replace("{DESCRIPTION}", description);
 					
+					//Adds the line to the returnString
 					returnString += line + "\n";
 					
 				}
 				
+				//Closes reader
 				reader.close();
 				
-			} catch (IOException e) {
+			} catch (Exception e) {
+				//Catches all errors
 				e.printStackTrace();
 			}
 			
@@ -184,28 +223,36 @@ public class Export {
 		
 		String returnString = "";
 		
+		//A loop to read all pictures for the album
 		for (String filename : fileDescrMap.get(album).keySet()) {
 			
+			//Gets the description for this picture
 			String description = fileDescrMap.get(album).get(filename);
 			
 			try {
 				
+				//Opens a reader
 				BufferedReader reader = new BufferedReader(new FileReader(new File(path + "tpl/page_tile.tpl")));
 				
+				//Reads the lines from the tpl/page_tile.tpl using a loop
 				String line;
 				while ((line = reader.readLine()) != null) {
 					
+					//Replaces the folder, the filename, etc.
 					line = line.replace("{FOLDER}", album);
 					line = line.replace("{FILENAME}", filename);
 					line = line.replace("{DESCRIPTION}", description);
 					
+					//Adds the line to the returnString
 					returnString += line + "\n";
 					
 				}
 				
+				//Closes reader
 				reader.close();
 				
-			} catch (IOException e) {
+			} catch (Exception e) {
+				//Catches all errors
 				e.printStackTrace();
 			}
 			
@@ -221,18 +268,23 @@ public class Export {
 		
 		try {
 			
+			//Opens a reader
 			BufferedReader reader = new BufferedReader(new FileReader(new File(path + "tpl/inc.tpl")));
 			
+			//Reads the lines from the tpl/inc.tpl using a loop
 			String line;
 			while ((line = reader.readLine()) != null) {
 				
+				//Adds the line to the returnString
 				returnString += line + "\n";
 				
 			}
-			
+
+			//Closes reader
 			reader.close();
 			
-		} catch (IOException e) {
+		} catch (Exception e) {
+			//Catches all errors
 			e.printStackTrace();
 		}
 		
@@ -249,21 +301,27 @@ public class Export {
 		
 		try {
 			
+			//Opens a reader
 			BufferedReader reader = new BufferedReader(new FileReader(new File(path + "tpl/footer.tpl")));
 			
+			//Reads the lines from the tpl/footer.tpl using a loop
 			String line;
 			while ((line = reader.readLine()) != null) {
 			
+				//Replaces the time and the year
 				line = line.replace("{TIME}", time);
 				line = line.replace("{YEAR}", year);
 				
+				//Adds the line to the returnString
 				returnString += line + "\n";
 				
 			}
-			
+
+			//Closes reader
 			reader.close();
 			
-		} catch (IOException e) {
+		} catch (Exception e) {
+			//Catches all errors
 			e.printStackTrace();
 		}
 		
@@ -272,15 +330,19 @@ public class Export {
 
 	private boolean copy(File file, String to) {
 		
+		//Copies the file
 		try {
 			Files.copy(file.toPath(), (new File(to)).toPath());
-		} catch (IOException e) {
+		} catch (Exception e) {
+			//Catches all errors
 			e.printStackTrace();
 			return false;
 		}
 		
+		//Outputs an message of success
 		System.out.println(file.getName() + " copied.");
 		
+		//After that it will check for an directory. If that is true it will copied the files in the directory.
 		if(file.isDirectory())
 			for (File otherFile : file.listFiles()) {
 				String fileString = to + "/" + otherFile.getName();
@@ -294,25 +356,33 @@ public class Export {
 	
 	private boolean copyImages(){
 		
+		//Outputs start message
 		System.out.println("copy images");
 		
+		//Make the folders for the pictures
 		new File(path + "output/images/").mkdir();
 		new File(path + "output/thumbs/").mkdir();
 		
+		//This loop is for the albums
 		for (String album : fileDescrMap.keySet()) {
 						
+			//Make the folders for the pictures form the <album>
 			new File(path + "output/images/" + album).mkdir();
 			new File(path + "output/thumbs/" + album).mkdir();
 			
+			//This loop is for the pictures in the album
 			for (String file : fileDescrMap.get(album).keySet()) {
 				
 				try {
+					//Copies the pictures and outputs an message of success
 					Files.copy((new File(path + "images/" + album + "/" + file)).toPath(), (new File(path + "output/images/" + album + "/" + file)).toPath());
 					System.out.println("images/" + album + "/" + file + " copied.");
 					
+					//Copies and scales the pictures and outputs an message of success
 					scale(new File(path + "images/" + album + "/" + file), new File(path + "output/thumbs/" + album + "/" + file));
 					System.out.println("images/" + album + "/" + file + " scaled and copied.");
-				} catch (IOException e) {
+				} catch (Exception e) {
+					//Catches all errors
 					e.printStackTrace();
 					return false;
 				}
@@ -320,6 +390,8 @@ public class Export {
 			}
 			
 		}
+		
+		//Outputs an message of success
 		System.out.println("copied images");
 		System.out.println();
 		
@@ -331,16 +403,20 @@ public class Export {
 		
 		try{
 		
+			//Reads the image
 			BufferedImage image = ImageIO.read(file);
 			
+			//Generates the height
 			int height = (int)( ((double)width)/(((double)image.getWidth())/((double)image.getHeight())));
 			
+			//Scales and writes the picture into the thumbs folder
 			BufferedImage imageThumbnail = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 			imageThumbnail.createGraphics().drawImage(image.getScaledInstance(width, height, Image.SCALE_SMOOTH),0,0,null);
 			String[] type = file.getName().split("\\.");
 			ImageIO.write(imageThumbnail, type[type.length-1], fileTo);
 		
-		}catch (IOException e) {
+		}catch (Exception e) {
+			//Catches all errors
 			e.printStackTrace();
 		}
 				
@@ -348,6 +424,7 @@ public class Export {
 
 	private static void delete(File file) {
 		
+		//Deletes the file recursive
 		if(file.isDirectory())
 			for (File otherFile : file.listFiles()) {
 				delete(otherFile);
