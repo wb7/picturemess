@@ -19,7 +19,7 @@ public class CreateAlbum {
 		
 	}
 	
-	public Boolean createAlbum(String folder, String title) {
+	public Boolean createAlbum(String folder, String title, String description) {
 		
 		//Checks if the album exists
 		if(!folderTitleMap.containsKey(folder)){
@@ -27,11 +27,8 @@ public class CreateAlbum {
 			//Creates the actually date
 			String date = (new SimpleDateFormat("dd MMMMM yyyy")).format(Calendar.getInstance().getTime());
 			
-			//Checks for the title and if no title is detected it will be generated using the folder. After that it will put the Strings in the folderTitleMap
-			if(title == null)
-				folderTitleMap.put(folder, new String[]{"New Album - " + folder, date , "An awesome album with great pictures."});
-			else
-				folderTitleMap.put(folder, new String[]{title, date, "An awesome album with great pictures."});
+			//It will put the Strings in the folderTitleMap
+			folderTitleMap.put(folder, new String[]{title, date, description});
 			
 			try {
 				//Opens and creates the file

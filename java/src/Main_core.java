@@ -52,14 +52,20 @@ public class Main_core {
 			CreateAlbum createAlbum = new CreateAlbum(path, folderTitleMap);
 			//Checks for an argument
 			if(args.length > 1){
-				//If no more arguments are given the title will be null.
+				//If no more arguments are given the title and the description will be a automatically generated String.
 				String title;
 				if(args.length > 2)
 					title = args[2];
 				else
-					title = null;
+					title = "New Album - " + args[1];
+				String description;
+				if(args.length > 3)
+					description = args[3];
+				else
+					description = "An awesome album with great pictures.";
+				
 				//Returns an error if something went wrong.
-				if(createAlbum.createAlbum(args[1], title))
+				if(createAlbum.createAlbum(args[1], title, description))
 					System.out.println("Created album " + args[1] + ".");
 				else
 					System.err.println("Something went wrong while creating an album! :(");
