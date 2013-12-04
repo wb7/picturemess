@@ -130,7 +130,7 @@ public class Init {
 			return false;
 		}
 		
-		//Outputs an message of success
+		//Outputs a message of success
 		System.out.println(fileXML.getName() + " loded.");
 		
 		return true;
@@ -167,7 +167,14 @@ public class Init {
 				NodeList titleNodeList = element.getElementsByTagName("title");
 				Element titleElement = (Element) titleNodeList.item(0);
 				NodeList titleChildNodes = titleElement.getChildNodes();
-				String title = ((Node) titleChildNodes.item(0)).getNodeValue();
+				
+				//If it contains null it will contain ""
+				String title;
+				try{
+					title = ((Node) titleChildNodes.item(0)).getNodeValue();
+				}catch (java.lang.NullPointerException e) {
+					title = "";
+				}
 				
 				//Gets the date from the album element and write it into the String
 				NodeList dateNodeList = element.getElementsByTagName("date");
@@ -179,8 +186,15 @@ public class Init {
 				NodeList descriptionNodeList = element.getElementsByTagName("description");
 				Element descriptionElement = (Element) descriptionNodeList.item(0);
 				NodeList descriptionChildNodes = descriptionElement.getChildNodes();
-				String description = ((Node) descriptionChildNodes.item(0)).getNodeValue();
-			
+				
+				//If it contains null it will contain ""
+				String description;
+				try{
+					description = ((Node) descriptionChildNodes.item(0)).getNodeValue();
+				}catch (java.lang.NullPointerException e) {
+					description = "";
+				}
+				
 				//Puts the folder and the other things into the folderTitleMap.
 				folderTitleMap.put(folder, new String[]{title, date, description});
 				

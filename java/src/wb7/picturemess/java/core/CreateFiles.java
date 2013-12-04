@@ -85,7 +85,7 @@ public class CreateFiles {
 			return false;
 		}
 		
-		//Outputs an message of success
+		//Outputs a message of success
 		System.out.println(album + ".xml created / changed.");
 		
 		return true;

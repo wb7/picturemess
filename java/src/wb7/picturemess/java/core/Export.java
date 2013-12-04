@@ -64,7 +64,7 @@ public class Export {
 		if(!createHtml())
 			return false;
 		
-		//Outputs an message of success
+		//Outputs a message of success
 		System.out.println("exported files");
 		
 		return true;
@@ -114,7 +114,7 @@ public class Export {
 			return false;
 		}
 		
-		//Outputs an message of success
+		//Outputs a message of success
 		System.out.println("output/index.html created.");
 		
 		//A loop to write htmls for all albums
@@ -162,12 +162,12 @@ public class Export {
 				return false;
 			}
 			
-			//Outputs an message of success
+			//Outputs a message of success
 			System.out.println("output/" + album + ".html created.");
 			
 		}
 		
-		//Outputs an message of success
+		//Outputs a message of success
 		System.out.println("created htmls");
 		System.out.println();
 		
@@ -339,7 +339,7 @@ public class Export {
 			return false;
 		}
 		
-		//Outputs an message of success
+		//Outputs a message of success
 		System.out.println(file.getName() + " copied.");
 		
 		//After that it will check for an directory. If that is true it will copied the files in the directory.
@@ -391,7 +391,7 @@ public class Export {
 			
 		}
 		
-		//Outputs an message of success
+		//Outputs a message of success
 		System.out.println("copied images");
 		System.out.println();
 		
