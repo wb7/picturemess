@@ -96,9 +96,9 @@ public class Main_gui {
 		file.setMnemonic(KeyEvent.VK_F);
 		menuBar.add(file);
 		
-		//Creates the JMenue File and set Alt+A as mnemonic
-		JMenuItem createAlbum = new JMenuItem("Create a album", KeyEvent.VK_A);
-		createAlbum.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
+		//Creates the JMenue File and set CTRL+N as mnemonic
+		JMenuItem createAlbum = new JMenuItem("New album", KeyEvent.VK_N);
+		createAlbum.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		//Adds the ActionListener
 		createAlbum.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent actionEvent) {
