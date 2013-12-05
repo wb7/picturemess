@@ -44,6 +44,17 @@ public class CreateAlbumDialog{
 		headline.setFont(new Font(null, Font.BOLD, 20));
 		dialog.add(headline);
 		
+		//Creates the titleLabel
+		JLabel title = new JLabel("Title:");
+		title.setFont(new Font(null, 0, 15));
+		title.setBounds(40, 130, 100, 30);
+		dialog.add(title);
+		
+		//Creates the titleTextField with a hint
+		final HintJTextField titleTextField = new HintJTextField("New Album - ");
+		titleTextField.setBounds(40, 160, 400, 30);
+		dialog.add(titleTextField);
+		
 		//Creates the folderLabel
 		JLabel folder = new JLabel("Folder:");
 		folder.setFont(new Font(null, 0, 15));
@@ -51,20 +62,19 @@ public class CreateAlbumDialog{
 		dialog.add(folder);
 		
 		//Creates the folderTextField
-		final JTextField folderTextField = new JTextField();
+		@SuppressWarnings("serial")
+		final SensetiveJTextField folderTextField = new SensetiveJTextField() {
+			
+			//What to do if the value changed
+			@Override
+			void onChanged() {
+				//Update the hint of the titleTextField
+				titleTextField.setHint("New Album - " + this.getText());
+			}
+			
+		};
 		folderTextField.setBounds(40, 90, 400, 30);
 		dialog.add(folderTextField);
-		
-		//Creates the titleLabel
-		JLabel title = new JLabel("Title:");
-		title.setFont(new Font(null, 0, 15));
-		title.setBounds(40, 130, 100, 30);
-		dialog.add(title);
-		
-		//Creates the titleTextField
-		final JTextField titleTextField = new JTextField();
-		titleTextField.setBounds(40, 160, 400, 30);
-		dialog.add(titleTextField);
 		
 		//Creates the descriptionLabel
 		JLabel description = new JLabel("Description:");
@@ -72,8 +82,8 @@ public class CreateAlbumDialog{
 		description.setBounds(40, 210, 100, 30);
 		dialog.add(description);
 		
-		//Creates the descriptionTextField
-		final JTextField descriptionTextField = new JTextField();
+		//Creates the descriptionTextField with a hint
+		final HintJTextField descriptionTextField = new HintJTextField("An awesome album with great pictures.");
 		descriptionTextField.setBounds(40, 240, 400, 30);
 		dialog.add(descriptionTextField);
 		
@@ -93,7 +103,7 @@ public class CreateAlbumDialog{
 		dialog.add(button);
 		
 		//Outputs a message of success
-		System.out.println("Creates dialog");
+		System.out.println("creates create dialog");
 		
 	}
 
@@ -117,7 +127,7 @@ public class CreateAlbumDialog{
 			JOptionPane.showConfirmDialog(dialog, "This album dose already exist.", "Album exists", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			
 			//Outputs an error-message
-			System.err.println("Album already exists");
+			System.err.println("album already exists");
 			
 			return;
 			
@@ -130,7 +140,7 @@ public class CreateAlbumDialog{
 			JOptionPane.showConfirmDialog(dialog, "Please, enter a word/name for the folder.", "Folder must not be nothing", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			
 			//Outputs an error-message
-			System.err.println("Album already exists");
+			System.err.println("album must not be \"\"");
 			
 			return;
 			
@@ -143,7 +153,7 @@ public class CreateAlbumDialog{
 			JOptionPane.showConfirmDialog(dialog, "Album \"" + folder + "\" created.", "Album created", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			
 			//Outputs a message of success
-			System.out.println("Creates album " + folder);
+			System.out.println("creates album " + folder);
 		
 			//Closes the dialog
 			dialog.dispose();
@@ -154,7 +164,7 @@ public class CreateAlbumDialog{
 			JOptionPane.showConfirmDialog(dialog, "Failed to create album " + folder + ".", "Could not create the album", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			
 			//Outputs an error-message
-			System.out.println("Creates album " + folder);
+			System.out.println("Something went wrong while creating an album! :(");
 			
 		}
 		
