@@ -7,16 +7,16 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-
 import wb7.picturemess.java.core.CreateAlbum;
+import wb7.picturemess.java.core.CreateFiles;
 import wb7.picturemess.java.core.Init;
 import wb7.picturemess.java.gui.CreateAlbumDialog;
 
 public class Main_gui {
 
 	private static HashMap<String, String[]> folderTitleMap;
-	@SuppressWarnings("unused")
 	private static HashMap<String, HashMap<String, String>> fileDescrMap;
 	@SuppressWarnings("unused")
 	private static int width;
@@ -24,6 +24,7 @@ public class Main_gui {
 	private static JFrame frame;
 	private static CreateAlbumDialog cAlbumDialog;
 	private static CreateAlbum cAlbum;
+	private static CreateFiles cFiles;
 
 	public static void main(String[] args) {
 		
@@ -33,6 +34,7 @@ public class Main_gui {
 		//Initialises some classes
 		cAlbum = new CreateAlbum(path, folderTitleMap);
 		cAlbumDialog = new CreateAlbumDialog(folderTitleMap, frame, cAlbum);
+		cFiles = new CreateFiles(path, fileDescrMap, folderTitleMap);
 		
 		//Creates the frame and static includes
 		createFrame();
@@ -88,6 +90,7 @@ public class Main_gui {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		System.out.println("frame created.");
+		System.out.println();
 		
 		JMenuBar menuBar = new JMenuBar();
 		
@@ -96,7 +99,7 @@ public class Main_gui {
 		file.setMnemonic(KeyEvent.VK_F);
 		menuBar.add(file);
 		
-		//Creates the JMenue File and set CTRL+N as mnemonic
+		//Creates the JMenueItem New album and set CTRL+N as mnemonic
 		JMenuItem createAlbum = new JMenuItem("New album", KeyEvent.VK_N);
 		createAlbum.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		//Adds the ActionListener
@@ -106,6 +109,25 @@ public class Main_gui {
 			}
 		});
 		file.add(createAlbum);
+		
+		//Creates the JMenue Update xmls and set CTRL+N as mnemonic
+		JMenuItem updateXmls = new JMenuItem("Update xmls", KeyEvent.VK_F5);
+		updateXmls.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
+		//Adds the ActionListener
+		updateXmls.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent actionEvent) {
+				if(cFiles.createFiles("--all")){
+					//Shows a success dialog
+					System.out.println("all files created");
+					JOptionPane.showConfirmDialog(frame, "All xmls updated", "Updated", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				}else{
+					//Shows an error dialog
+					System.out.println("Something went wrong while creating files! :(");
+					JOptionPane.showConfirmDialog(frame, "Could not update xmls", "Update failed", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+				}
+			}
+		});
+		file.add(updateXmls);
 		
 		//Adds the JMenueBar to the frame
 		frame.setJMenuBar(menuBar);

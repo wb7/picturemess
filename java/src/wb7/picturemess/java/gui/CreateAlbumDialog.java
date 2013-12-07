@@ -104,6 +104,7 @@ public class CreateAlbumDialog{
 		
 		//Outputs a message of success
 		System.out.println("creates create dialog");
+		System.out.println();
 		
 	}
 
