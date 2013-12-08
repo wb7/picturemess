@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import wb7.picturemess.java.core.CreateAlbum;
 import wb7.picturemess.java.core.CreateFiles;
+import wb7.picturemess.java.core.Export;
 import wb7.picturemess.java.core.Init;
 import wb7.picturemess.java.gui.CreateAlbumDialog;
 
@@ -18,13 +19,13 @@ public class Main_gui {
 
 	private static HashMap<String, String[]> folderTitleMap;
 	private static HashMap<String, HashMap<String, String>> fileDescrMap;
-	@SuppressWarnings("unused")
 	private static int width;
 	private static String path;
 	private static JFrame frame;
 	private static CreateAlbumDialog cAlbumDialog;
 	private static CreateAlbum cAlbum;
 	private static CreateFiles cFiles;
+	private static Export export;
 
 	public static void main(String[] args) {
 		
@@ -35,6 +36,7 @@ public class Main_gui {
 		cAlbum = new CreateAlbum(path, folderTitleMap);
 		cAlbumDialog = new CreateAlbumDialog(folderTitleMap, frame, cAlbum);
 		cFiles = new CreateFiles(path, fileDescrMap, folderTitleMap);
+		export = new Export(path, fileDescrMap, folderTitleMap, width);
 		
 		//Creates the frame and static includes
 		createFrame();
@@ -100,21 +102,21 @@ public class Main_gui {
 		menuBar.add(file);
 		
 		//Creates the JMenueItem New album and set CTRL+N as mnemonic
-		JMenuItem createAlbum = new JMenuItem("New album", KeyEvent.VK_N);
-		createAlbum.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+		JMenuItem createAlbumItem = new JMenuItem("New album", KeyEvent.VK_N);
+		createAlbumItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		//Adds the ActionListener
-		createAlbum.addActionListener(new ActionListener() {
+		createAlbumItem.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent actionEvent) {
 				cAlbumDialog.createAlbumDialog();
 			}
 		});
-		file.add(createAlbum);
+		file.add(createAlbumItem);
 		
-		//Creates the JMenue Update xmls and set CTRL+N as mnemonic
-		JMenuItem updateXmls = new JMenuItem("Update xmls", KeyEvent.VK_F5);
-		updateXmls.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
+		//Creates the JMenueItem Update xmls and set CTRL+U as mnemonic
+		JMenuItem updateXmlsItem = new JMenuItem("Update xmls", KeyEvent.VK_U);
+		updateXmlsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, ActionEvent.CTRL_MASK));
 		//Adds the ActionListener
-		updateXmls.addActionListener(new ActionListener() {
+		updateXmlsItem.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent actionEvent) {
 				if(cFiles.createFiles("--all")){
 					//Shows a success dialog
@@ -127,7 +129,26 @@ public class Main_gui {
 				}
 			}
 		});
-		file.add(updateXmls);
+		file.add(updateXmlsItem);
+		
+		//Creates the JMenueItem Export and set CTRL+E as mnemonic
+		JMenuItem exportItem = new JMenuItem("Export", KeyEvent.VK_E);
+		exportItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
+		//Adds the ActionListener
+		exportItem.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent actionEvent) {
+				if(export.export()){
+					//Shows a success dialog
+					System.out.println("all files exported");
+					JOptionPane.showConfirmDialog(frame, "All files exported", "Exported", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				}else{
+					//Shows an error dialog
+					System.out.println("Something went wrong while exporting files! :(");
+					JOptionPane.showConfirmDialog(frame, "Could not export files", "Export failed", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+				}
+			}
+		});
+		file.add(exportItem);
 		
 		//Adds the JMenueBar to the frame
 		frame.setJMenuBar(menuBar);
