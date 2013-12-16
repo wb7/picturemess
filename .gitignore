@@ -1,5 +1,4 @@
 output/
 test.*
 java/wb7/
-java/Main_core.class
-java/Main_gui.class
+*.class

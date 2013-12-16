@@ -88,7 +88,6 @@ public class Main_gui {
 		frame.setSize(700, 600);
 		frame.setLocationRelativeTo(null);
 		frame.setLayout(null);
-		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		System.out.println("frame created.");
@@ -153,6 +152,9 @@ public class Main_gui {
 		//Adds the JMenueBar to the frame
 		frame.setJMenuBar(menuBar);
 
+		//Makes the frame visibly
+		frame.setVisible(true);
+		
 	}
 
 }
