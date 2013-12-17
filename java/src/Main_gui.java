@@ -1,6 +1,10 @@
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
@@ -148,6 +152,26 @@ public class Main_gui {
 			}
 		});
 		file.add(exportItem);
+		
+		//Creates the JMenueItem Show and set ALT+S as mnemonic
+		JMenuItem showItem = new JMenuItem("Show export", KeyEvent.VK_S);
+		showItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
+		//Adds the ActionListener
+		showItem.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent actionEvent) {
+				try {
+					Desktop.getDesktop().browse(new URI("file://" + path + "output/index.html"));
+				} catch (IOException | URISyntaxException e) {
+
+					e.printStackTrace();
+					
+					//Shows an error dialog
+					System.out.println("Something went wrong while opening export! :(");
+					JOptionPane.showConfirmDialog(frame, "Could not open the export in your browser.\nDose it exists?", "Opening failed", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+				}
+			}
+		});
+		file.add(showItem);
 		
 		//Adds the JMenueBar to the frame
 		frame.setJMenuBar(menuBar);
