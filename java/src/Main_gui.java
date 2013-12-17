@@ -1,11 +1,33 @@
+/*
+ *  Copyright 2013 vilaureu
+ *   
+ *     This file is part of picturemess.
+ *
+ *  picturemess is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  picturemess is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with picturemess.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
+
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -13,6 +35,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+
+import vilaureu.sjkevDB.SjkevDBReader;
 import wb7.picturemess.java.core.CreateAlbum;
 import wb7.picturemess.java.core.CreateFiles;
 import wb7.picturemess.java.core.Export;
@@ -20,7 +44,7 @@ import wb7.picturemess.java.core.Init;
 import wb7.picturemess.java.gui.CreateAlbumDialog;
 
 public class Main_gui {
-
+	
 	private static HashMap<String, String[]> folderTitleMap;
 	private static HashMap<String, HashMap<String, String>> fileDescrMap;
 	private static int width;
@@ -30,15 +54,25 @@ public class Main_gui {
 	private static CreateAlbum cAlbum;
 	private static CreateFiles cFiles;
 	private static Export export;
+	private static LinkedHashMap<String, String> languageMap;
 
 	public static void main(String[] args) {
 		
 		//Loads the config.xml the albums.xml and the xml files for the albums.
 		init();
 		
+		//Loads the language file
+		SjkevDBReader reader = new SjkevDBReader(new File("language.sjkevDB"));
+		try {
+			languageMap = reader.read();
+		} catch (IOException e) {
+			System.out.println("Something went wrong while loading the language file! :(");
+			e.printStackTrace();
+		}
+		
 		//Initialises some classes
 		cAlbum = new CreateAlbum(path, folderTitleMap);
-		cAlbumDialog = new CreateAlbumDialog(folderTitleMap, frame, cAlbum);
+		cAlbumDialog = new CreateAlbumDialog(folderTitleMap, frame, cAlbum, languageMap);
 		cFiles = new CreateFiles(path, fileDescrMap, folderTitleMap);
 		export = new Export(path, fileDescrMap, folderTitleMap, width);
 		
@@ -100,12 +134,12 @@ public class Main_gui {
 		JMenuBar menuBar = new JMenuBar();
 		
 		//Creates the JMenue File and set Alt+F as mnemonic
-		JMenu file = new JMenu("File");
+		JMenu file = new JMenu(languageMap.get("menue-file"));
 		file.setMnemonic(KeyEvent.VK_F);
 		menuBar.add(file);
 		
 		//Creates the JMenueItem New album and set CTRL+N as mnemonic
-		JMenuItem createAlbumItem = new JMenuItem("New album", KeyEvent.VK_N);
+		JMenuItem createAlbumItem = new JMenuItem(languageMap.get("menue-new album"), KeyEvent.VK_N);
 		createAlbumItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		//Adds the ActionListener
 		createAlbumItem.addActionListener(new ActionListener() {
@@ -116,7 +150,7 @@ public class Main_gui {
 		file.add(createAlbumItem);
 		
 		//Creates the JMenueItem Update xmls and set CTRL+U as mnemonic
-		JMenuItem updateXmlsItem = new JMenuItem("Update xmls", KeyEvent.VK_U);
+		JMenuItem updateXmlsItem = new JMenuItem(languageMap.get("menue-update"), KeyEvent.VK_U);
 		updateXmlsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, ActionEvent.CTRL_MASK));
 		//Adds the ActionListener
 		updateXmlsItem.addActionListener(new ActionListener() {
@@ -124,18 +158,18 @@ public class Main_gui {
 				if(cFiles.createFiles("--all")){
 					//Shows a success dialog
 					System.out.println("all files created");
-					JOptionPane.showConfirmDialog(frame, "All xmls updated", "Updated", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showConfirmDialog(frame, languageMap.get("succ pane-upd"), languageMap.get("succ title-upd"), JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				}else{
 					//Shows an error dialog
 					System.out.println("Something went wrong while creating files! :(");
-					JOptionPane.showConfirmDialog(frame, "Could not update xmls", "Update failed", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+					JOptionPane.showConfirmDialog(frame, languageMap.get("error pane-upd"), languageMap.get("error title-upd"), JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
 				}
 			}
 		});
 		file.add(updateXmlsItem);
 		
 		//Creates the JMenueItem Export and set CTRL+E as mnemonic
-		JMenuItem exportItem = new JMenuItem("Export", KeyEvent.VK_E);
+		JMenuItem exportItem = new JMenuItem(languageMap.get("menue-export"), KeyEvent.VK_E);
 		exportItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
 		//Adds the ActionListener
 		exportItem.addActionListener(new ActionListener() {
@@ -143,18 +177,18 @@ public class Main_gui {
 				if(export.export()){
 					//Shows a success dialog
 					System.out.println("all files exported");
-					JOptionPane.showConfirmDialog(frame, "All files exported", "Exported", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showConfirmDialog(frame, languageMap.get("succ pane-exp"), languageMap.get("succ title-exp"), JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				}else{
 					//Shows an error dialog
 					System.out.println("Something went wrong while exporting files! :(");
-					JOptionPane.showConfirmDialog(frame, "Could not export files", "Export failed", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+					JOptionPane.showConfirmDialog(frame, languageMap.get("error pane-exp"), languageMap.get("error title-exp"), JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
 				}
 			}
 		});
 		file.add(exportItem);
 		
 		//Creates the JMenueItem Show and set ALT+S as mnemonic
-		JMenuItem showItem = new JMenuItem("Show export", KeyEvent.VK_S);
+		JMenuItem showItem = new JMenuItem(languageMap.get("menue-show"), KeyEvent.VK_S);
 		showItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
 		//Adds the ActionListener
 		showItem.addActionListener(new ActionListener() {
@@ -167,7 +201,7 @@ public class Main_gui {
 					
 					//Shows an error dialog
 					System.out.println("Something went wrong while opening export! :(");
-					JOptionPane.showConfirmDialog(frame, "Could not open the export in your browser.\nDose it exists?", "Opening failed", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+					JOptionPane.showConfirmDialog(frame, languageMap.get("error pane-show"), languageMap.get("error title-show"), JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
 				}
 			}
 		});

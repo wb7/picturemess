@@ -1,0 +1,22 @@
+menue-file:File
+menue-new album:New album
+menue-update:Update xmls
+error pane-upd:Could not update xmls
+error title-upd:Update failed
+succ pane-upd:All xmls updated
+succ title-upd:Updated
+menue-export:Export
+succ pane-exp:All files exported
+succ title-exp:Exported
+error pane-exp:Could not export files
+error title-exp:Export failed
+menue-show:Show export
+error pane-show:Could not export files
+error title-show:Could not open the export in your browser.\nDose it exists?
+error pane-show:Opening failed
+cad-headline:Create a new album
+cad-title:Title:
+cad-title field:New Album - 
+cad-folder:Folder:
+cad-descr:Description:
+cad-descr field:An awesome album with great pictures.

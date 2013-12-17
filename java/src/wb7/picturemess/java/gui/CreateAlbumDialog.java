@@ -1,9 +1,30 @@
+/*
+ *  Copyright 2013 vilaureu
+ *   
+ *     This file is part of picturemess.
+ *
+ *  picturemess is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  picturemess is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with picturemess.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
+
 package wb7.picturemess.java.gui;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -20,9 +41,11 @@ public class CreateAlbumDialog{
 	private JFrame frame;
 	private HashMap<String, String[]> folderTitleMap;
 	private CreateAlbum cAlbum;
+	private LinkedHashMap<String, String> languageMap;
 
-	public CreateAlbumDialog(HashMap<String, String[]> folderTitleMap, JFrame frame, CreateAlbum cAlbum) {
+	public CreateAlbumDialog(HashMap<String, String[]> folderTitleMap, JFrame frame, CreateAlbum cAlbum, LinkedHashMap<String, String> languageMap) {
 		
+		this.languageMap = languageMap;
 		this.frame = frame;
 		this.folderTitleMap = folderTitleMap;
 		this.cAlbum = cAlbum;
@@ -32,31 +55,31 @@ public class CreateAlbumDialog{
 	public void createAlbumDialog() {
 		
 		//Creates a JDialog for the JFrame frame
-		dialog = new JDialog(frame);
+		dialog = new JDialog(frame, languageMap.get("cad-headline"));
 		dialog.setSize(500, 400);
 		dialog.setLocationRelativeTo(null);
 		dialog.setLayout(null);
 		dialog.setVisible(true);
 		
 		//Creates the headline
-		JLabel headline = new JLabel("Create a new album");
+		JLabel headline = new JLabel(languageMap.get("cad-headline"));
 		headline.setBounds(150, 10, 300, 50);
 		headline.setFont(new Font(null, Font.BOLD, 20));
 		dialog.add(headline);
 		
 		//Creates the titleLabel
-		JLabel title = new JLabel("Title:");
+		JLabel title = new JLabel(languageMap.get("cad-title"));
 		title.setFont(new Font(null, 0, 15));
 		title.setBounds(40, 130, 100, 30);
 		dialog.add(title);
 		
 		//Creates the titleTextField with a hint
-		final HintJTextField titleTextField = new HintJTextField("New Album - ");
+		final HintJTextField titleTextField = new HintJTextField(languageMap.get("cad-title field"));
 		titleTextField.setBounds(40, 160, 400, 30);
 		dialog.add(titleTextField);
 		
 		//Creates the folderLabel
-		JLabel folder = new JLabel("Folder:");
+		JLabel folder = new JLabel(languageMap.get("cad-folder"));
 		folder.setFont(new Font(null, 0, 15));
 		folder.setBounds(40, 60, 100, 30);
 		dialog.add(folder);
@@ -69,7 +92,7 @@ public class CreateAlbumDialog{
 			@Override
 			void onChanged() {
 				//Update the hint of the titleTextField
-				titleTextField.setHint("New Album - " + this.getText());
+				titleTextField.setHint(languageMap.get("cad-title field") + this.getText());
 			}
 			
 		};
@@ -77,13 +100,13 @@ public class CreateAlbumDialog{
 		dialog.add(folderTextField);
 		
 		//Creates the descriptionLabel
-		JLabel description = new JLabel("Description:");
+		JLabel description = new JLabel(languageMap.get("cad-descr"));
 		description.setFont(new Font(null, 0, 15));
 		description.setBounds(40, 210, 100, 30);
 		dialog.add(description);
 		
 		//Creates the descriptionTextField with a hint
-		final HintJTextField descriptionTextField = new HintJTextField("An awesome album with great pictures.");
+		final HintJTextField descriptionTextField = new HintJTextField(languageMap.get("cad-descr field"));
 		descriptionTextField.setBounds(40, 240, 400, 30);
 		dialog.add(descriptionTextField);
 		
