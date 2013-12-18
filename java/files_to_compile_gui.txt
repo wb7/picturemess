@@ -5,5 +5,6 @@ src/wb7/picturemess/java/core/CreateAlbum.java
 src/wb7/picturemess/java/gui/CreateAlbumDialog.java
 src/wb7/picturemess/java/gui/HintJTextField.java
 src/wb7/picturemess/java/gui/SensetiveJTextField.java
+src/wb7/picturemess/java/gui/PaneController.java
 src/vilaureu/sjkevDB/SjkevDBReader.java
 src/Main_gui.java

@@ -42,6 +42,7 @@ import wb7.picturemess.java.core.CreateFiles;
 import wb7.picturemess.java.core.Export;
 import wb7.picturemess.java.core.Init;
 import wb7.picturemess.java.gui.CreateAlbumDialog;
+import wb7.picturemess.java.gui.PaneController;
 
 public class Main_gui {
 	
@@ -125,11 +126,27 @@ public class Main_gui {
 		frame = new JFrame("picturemess");
 		frame.setSize(700, 600);
 		frame.setLocationRelativeTo(null);
-		frame.setLayout(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		System.out.println("frame created.");
 		System.out.println();
+		
+		//Function to create the Menu
+		createMenu();
+		
+		//Creates a PaneController that controls the JPanels and the JScrollPane
+		PaneController paneController = new PaneController(path, folderTitleMap, fileDescrMap);
+		
+		//Adds the JScrollPane from the paneController and validates the frame
+		frame.add(paneController);
+		frame.validate();
+		
+		//Makes the frame visibly
+		frame.setVisible(true);
+		
+	}
+
+	private static void createMenu() {
 		
 		JMenuBar menuBar = new JMenuBar();
 		
@@ -209,9 +226,6 @@ public class Main_gui {
 		
 		//Adds the JMenueBar to the frame
 		frame.setJMenuBar(menuBar);
-
-		//Makes the frame visibly
-		frame.setVisible(true);
 		
 	}
 
