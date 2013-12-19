@@ -31,7 +31,7 @@ public class SjkevDBReader {
 	//Creates a clear LinkedHashMap
 	private LinkedHashMap<String, String> map = new LinkedHashMap<>();
 	//This are default configurations
-	private String split = ":";
+	private String split = ": ";
 	private String backslashN = "\\n";
 	private String backslashR = "\\r";
 	
