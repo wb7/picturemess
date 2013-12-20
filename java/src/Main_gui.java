@@ -135,7 +135,7 @@ public class Main_gui {
 		createMenu();
 		
 		//Creates a PaneController that controls the JPanels and the JScrollPane
-		PaneController paneController = new PaneController(path, folderTitleMap, fileDescrMap);
+		PaneController paneController = new PaneController(path, folderTitleMap, fileDescrMap, languageMap);
 		
 		//Adds the JScrollPane from the paneController and validates the frame
 		frame.add(paneController);
@@ -151,12 +151,12 @@ public class Main_gui {
 		JMenuBar menuBar = new JMenuBar();
 		
 		//Creates the JMenue File and set Alt+F as mnemonic
-		JMenu file = new JMenu(languageMap.get("menue-file"));
+		JMenu file = new JMenu(languageMap.get("menue->file"));
 		file.setMnemonic(KeyEvent.VK_F);
 		menuBar.add(file);
 		
 		//Creates the JMenueItem New album and set CTRL+N as mnemonic
-		JMenuItem createAlbumItem = new JMenuItem(languageMap.get("menue-new album"), KeyEvent.VK_N);
+		JMenuItem createAlbumItem = new JMenuItem(languageMap.get("menue->new album"), KeyEvent.VK_N);
 		createAlbumItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		//Adds the ActionListener
 		createAlbumItem.addActionListener(new ActionListener() {
@@ -167,7 +167,7 @@ public class Main_gui {
 		file.add(createAlbumItem);
 		
 		//Creates the JMenueItem Update xmls and set CTRL+U as mnemonic
-		JMenuItem updateXmlsItem = new JMenuItem(languageMap.get("menue-update"), KeyEvent.VK_U);
+		JMenuItem updateXmlsItem = new JMenuItem(languageMap.get("menue->update"), KeyEvent.VK_U);
 		updateXmlsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, ActionEvent.CTRL_MASK));
 		//Adds the ActionListener
 		updateXmlsItem.addActionListener(new ActionListener() {
@@ -175,18 +175,18 @@ public class Main_gui {
 				if(cFiles.createFiles("--all")){
 					//Shows a success dialog
 					System.out.println("all files created");
-					JOptionPane.showConfirmDialog(frame, languageMap.get("succ pane-upd"), languageMap.get("succ title-upd"), JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showConfirmDialog(frame, languageMap.get("succ pane->upd"), languageMap.get("succ title->upd"), JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				}else{
 					//Shows an error dialog
 					System.out.println("Something went wrong while creating files! :(");
-					JOptionPane.showConfirmDialog(frame, languageMap.get("error pane-upd"), languageMap.get("error title-upd"), JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+					JOptionPane.showConfirmDialog(frame, languageMap.get("error pane->upd"), languageMap.get("error title->upd"), JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
 				}
 			}
 		});
 		file.add(updateXmlsItem);
 		
 		//Creates the JMenueItem Export and set CTRL+E as mnemonic
-		JMenuItem exportItem = new JMenuItem(languageMap.get("menue-export"), KeyEvent.VK_E);
+		JMenuItem exportItem = new JMenuItem(languageMap.get("menue->export"), KeyEvent.VK_E);
 		exportItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
 		//Adds the ActionListener
 		exportItem.addActionListener(new ActionListener() {
@@ -194,31 +194,31 @@ public class Main_gui {
 				if(export.export()){
 					//Shows a success dialog
 					System.out.println("all files exported");
-					JOptionPane.showConfirmDialog(frame, languageMap.get("succ pane-exp"), languageMap.get("succ title-exp"), JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showConfirmDialog(frame, languageMap.get("succ pane->exp"), languageMap.get("succ title->exp"), JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				}else{
 					//Shows an error dialog
 					System.out.println("Something went wrong while exporting files! :(");
-					JOptionPane.showConfirmDialog(frame, languageMap.get("error pane-exp"), languageMap.get("error title-exp"), JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+					JOptionPane.showConfirmDialog(frame, languageMap.get("error pane->exp"), languageMap.get("error title->exp"), JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
 				}
 			}
 		});
 		file.add(exportItem);
 		
 		//Creates the JMenueItem Show and set ALT+S as mnemonic
-		JMenuItem showItem = new JMenuItem(languageMap.get("menue-show"), KeyEvent.VK_S);
+		JMenuItem showItem = new JMenuItem(languageMap.get("menue->show"), KeyEvent.VK_S);
 		showItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
 		//Adds the ActionListener
 		showItem.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent actionEvent) {
 				try {
-					Desktop.getDesktop().browse(new URI("file://" + path + "output/index.html"));
+					Desktop.getDesktop().browse(new URI("file://" + (new File(path + "output/index.html").getCanonicalPath().replace("\\", "/"))));
 				} catch (IOException | URISyntaxException e) {
 
 					e.printStackTrace();
 					
 					//Shows an error dialog
 					System.out.println("Something went wrong while opening export! :(");
-					JOptionPane.showConfirmDialog(frame, languageMap.get("error pane-show"), languageMap.get("error title-show"), JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
+					JOptionPane.showConfirmDialog(frame, languageMap.get("error pane->show"), languageMap.get("error title->show"), JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);	
 				}
 			}
 		});

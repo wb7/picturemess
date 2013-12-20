@@ -20,3 +20,4 @@ cad->title field: New Album -
 cad->folder: Folder:
 cad->descr: Description:
 cad->descr field: An awesome album with great pictures.
+main panel->headline: All albums:
