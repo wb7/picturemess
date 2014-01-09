@@ -24,6 +24,7 @@ import wb7.picturemess.java.core.CreateAlbum;
 import wb7.picturemess.java.core.CreateFiles;
 import wb7.picturemess.java.core.Export;
 import wb7.picturemess.java.core.Init;
+import wb7.picturemess.java.core.RemoveAlbum;
 
 public class Main_core {
 
@@ -91,7 +92,19 @@ public class Main_core {
 					System.err.println("Something went wrong while creating an album! :(");
 			}else
 				System.err.println("Please give an folder to create the album there.");
-		}
+		}else if(args[0].equalsIgnoreCase("--remove-album")){
+				//Checks for an argument
+				if(args.length >= 2){
+					RemoveAlbum removeAlbum = new RemoveAlbum(path, folderTitleMap);
+					//Returns an error if something went wrong.
+					if(removeAlbum.removeAlbum(args[1]))
+						System.out.println("Removed album.");
+					else
+						System.err.println("Something went wrong while removing album! :(");
+				}else
+					System.err.println("Please give an album.");
+		}else
+			System.err.println("Please give an command.");
 		
 	}
 

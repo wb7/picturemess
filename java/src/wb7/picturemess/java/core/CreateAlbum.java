@@ -20,9 +20,6 @@
 
 package wb7.picturemess.java.core;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -51,30 +48,11 @@ public class CreateAlbum {
 			folderTitleMap.put(folder, new String[]{title, date, description});
 			
 			try {
-				//Opens and creates the file
-				BufferedWriter writer = new BufferedWriter(new FileWriter(new File(path + "albums.xml")));
 				
-				//Writes start
-				writer.write("<albums>\n");
-				
-				//Writes the content of the folderTitleMap using a loop
-				for (String tmpFolder : folderTitleMap.keySet()) {
-					
-					String[] value = folderTitleMap.get(tmpFolder);
-					
-					writer.write("  <album>\n");
-					writer.write("    <title>" + value[0] + "</title>\n");
-					writer.write("    <folder>" + tmpFolder + "</folder>\n");
-					writer.write("    <date>" + value[1] + "</date>\n");
-					writer.write("    <description>" + value[2] + "</description>\n");
-					writer.write("  </album>\n");
-				}
-				
-				//Writes end
-				writer.write("</albums>\n");
-				
-				//Closes the writer
-				writer.close();
+				//Writes the albums.xml with the change
+				WriteAlbumsXml writeAlbumsXml = new WriteAlbumsXml(folderTitleMap, path);
+				writeAlbumsXml.writeAll();
+				writeAlbumsXml.close();
 			
 			} catch (Exception e) {
 				//Catches all errors

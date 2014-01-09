@@ -442,7 +442,7 @@ public class Export {
 				
 	}
 
-	private static void delete(File file) {
+	public static void delete(File file) {
 		
 		//Deletes the file recursive
 		if(file.isDirectory())
