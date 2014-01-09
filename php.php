@@ -18,6 +18,9 @@ if ($argv[1] == "--create-files"){$pm->createFiles($argv[2]);}
 // check if user wants to create new album
 if ($argv[1] == "--create-album"){$pm->createAlbum($argv[2]);}
 
+// remove album
+if ($argv[1] == "--remove-album"){$pm->removeAlbum($argv[2]);}
+
 // export html
 if ($argv[1] == "--export"){$pm->create();}
 

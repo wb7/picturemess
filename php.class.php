@@ -382,6 +382,45 @@ class picturemess {
 		}
 	}
 
+	public function removeAlbum($folder) {
+
+                if (file_exists($this->dir . "images/" . $folder)) {
+			echo "Will remove $folder.";
+			unlink($this->dir . "desc/" . $folder . ".xml");
+			$temp = scandir($this->dir . "images/" . $folder);
+			unset($temp[0]);
+			unset($temp[1]);
+
+			foreach($temp as $tmp) {
+				unlink($this->dir . "images/" . $folder . "/" . $tmp);
+				echo "Removed " . $tmp . ".";
+			}
+
+			rmdir($this->dir . "images/" . $folder);
+
+                        $file = file_get_contents($this->dir . "albums.xml");
+			$xml = simplexml_load_string($file);
+			$block = "<albums>\r\n"; // Contains the string of the new file
+
+			foreach($xml->album as $album) {
+				If ($album->folder != $folder) {
+					$block .= "  <album>\r\n";
+                        		$block .= "    <title>" . $album->title . "</title>\r\n";
+                        		$block .= "    <folder>" . $album->folder . "</folder>\r\n";
+                        		$block .= "    <date>" . $album->date . "</date>\r\n";
+                        		$block .= "    <description>" . $album->description . "</description>\r\n";
+                        		$block .= "  </album>\r\n";
+				}
+			}
+
+			$block .= "</albums>\r\n";
+			$handle = fopen($this->dir . "albums.xml", "w");
+			fwrite($handle, $block);
+			echo "Wrote new albums.xml";
+			fclose($handle);
+		}
+
+	}
 
 }
 ?>
