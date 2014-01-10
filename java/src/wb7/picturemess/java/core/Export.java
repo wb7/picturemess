@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013 vilaureu
+ *  Copyright 2013, 2014 vilaureu
  *   
  *     This file is part of picturemess.
  *
