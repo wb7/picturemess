@@ -3,3 +3,5 @@ src/wb7/picturemess/java/core/Init.java
 src/wb7/picturemess/java/core/Export.java
 src/wb7/picturemess/java/core/CreateFiles.java
 src/wb7/picturemess/java/core/CreateAlbum.java
+src/wb7/picturemess/java/core/RemoveAlbum.java
+src/wb7/picturemess/java/core/WriteAlbumsXml.java
