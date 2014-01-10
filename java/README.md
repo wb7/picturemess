@@ -12,7 +12,7 @@ How to use the java part
 	
 #### Compile for gui:
 	javac -d ./ @files_to_compile_gui.txt
-#### Start for only core:
-	java bin\Main_gui
+#### Start for gui:
+	java Main_gui
 
 *The options to "compile" the java version of picturemess are the same under linux environments. As far we have tested.*
