@@ -20,34 +20,17 @@
 
 package wb7.picturemess.java.gui;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
 public class PaneController extends JScrollPane{
 
-	@SuppressWarnings("unused")
-	private HashMap<String, String[]> folderTitleMap;
-	@SuppressWarnings("unused")
-	private String path;
-	@SuppressWarnings("unused")
-	private HashMap<String, HashMap<String, String>> fileDescrMap;
-	private JPanel mainPanel;
-	@SuppressWarnings("unused")
-	private LinkedHashMap<String, String> languageMap;
+	private MainPanel mainPanel;
 
-	public PaneController(String path, HashMap<String, String[]> folderTitleMap, HashMap<String, HashMap<String, String>> fileDescrMap, LinkedHashMap<String, String> languageMap) {
-		
-		this.path = path;
-		this.folderTitleMap = folderTitleMap;
-		this.fileDescrMap = fileDescrMap;
-		this.languageMap = languageMap;
+	public PaneController(VariablesCollection variablesCollection) {
 		
 		//Creates the mainJPanel
-		mainPanel = new MainPanel(path, folderTitleMap, fileDescrMap, languageMap);
+		mainPanel = new MainPanel(variablesCollection);
 		
 		//Sets the mainPanle as View of the JScrollPane
 		setViewportView(mainPanel);

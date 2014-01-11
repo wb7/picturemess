@@ -1,49 +1,59 @@
+/*
+ *  Copyright 2013, 2014 vilaureu
+ *   
+ *     This file is part of picturemess.
+ *
+ *  picturemess is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  picturemess is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with picturemess.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
+
 package wb7.picturemess.java.gui;
 
-import java.awt.Color;
 import java.awt.Font;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class MainPanel extends JPanel{
 
-	@SuppressWarnings("unused")
-	private String path;
-	private HashMap<String, String[]> folderTitleMap;
-	@SuppressWarnings("unused")
-	private HashMap<String, HashMap<String, String>> fileDescrMap;
-	private LinkedHashMap<String, String> languageMap;
+	private VariablesCollection variablesCollection;
 
-	public MainPanel(String path, HashMap<String, String[]> folderTitleMap,
-			HashMap<String, HashMap<String, String>> fileDescrMap, LinkedHashMap<String, String> languageMap) {
+	public MainPanel(VariablesCollection variablesCollection) {
 		
+		//Creates the JPanel without a LayoutManager
 		super(null);
 		
-		this.path = path;
-		this.folderTitleMap = folderTitleMap;
-		this.fileDescrMap = fileDescrMap;
-		this.languageMap = languageMap;
+		this.variablesCollection = variablesCollection;
 		
+		//Creates the JPanel
 		createPanel();
 		
 	}
 
 	private void createPanel() {
 		
-		JLabel headline = new JLabel(languageMap.get("main panel->headline"));
+		//Creates the headline
+		JLabel headline = new JLabel(variablesCollection.languageMap.get("main panel->headline"));
 		headline.setBounds(50, 20, 200, 50);
 		headline.setFont(new Font(null, Font.BOLD, 20));
 		add(headline);
 		
+		//Creates all AlbumPanels
 		int i = 0;
-		for (String folder : folderTitleMap.keySet()) {
+		for (String folder : variablesCollection.folderTitleMap.keySet()) {
 			
-			AlbumPanel albumPanel = new AlbumPanel(folder, i, folderTitleMap, fileDescrMap, path, languageMap);
+			AlbumPanel albumPanel = new AlbumPanel(folder, i, variablesCollection);
 			
 			add(albumPanel);
 			

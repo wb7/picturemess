@@ -21,3 +21,9 @@ cad->folder: Folder:
 cad->descr: Description:
 cad->descr field: An awesome album with great pictures.
 main panel->headline: All albums:
+menue->album: Album
+menue->album update: Update xml(s)
+error pane->album upd: Could not update xml(s)
+error title->album upd: Update failed
+succ pane->album upd: The xml(s) updated
+succ title->album upd: Updated
