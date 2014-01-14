@@ -29,6 +29,7 @@ import wb7.picturemess.java.core.CreateAlbum;
 import wb7.picturemess.java.core.CreateFiles;
 import wb7.picturemess.java.core.Export;
 import wb7.picturemess.java.core.Init;
+import wb7.picturemess.java.core.RemoveAlbum;
 import wb7.picturemess.java.gui.CreateAlbumDialog;
 import wb7.picturemess.java.gui.Menu;
 import wb7.picturemess.java.gui.PaneController;
@@ -47,6 +48,7 @@ public class Main_gui {
 	private static Export export;
 	private static LinkedHashMap<String, String> languageMap;
 	private static VariablesCollection variablesCollection;
+	private static RemoveAlbum rAlbum;
 
 	public static void main(String[] args) {
 		
@@ -66,8 +68,9 @@ public class Main_gui {
 		cAlbum = new CreateAlbum(path, folderTitleMap);
 		cFiles = new CreateFiles(path, fileDescrMap, folderTitleMap);
 		export = new Export(path, fileDescrMap, folderTitleMap, width);
+		rAlbum = new RemoveAlbum(path, folderTitleMap);
 		
-		variablesCollection = new VariablesCollection(folderTitleMap, fileDescrMap, width, path, frame, cAlbum, cFiles, export, languageMap);
+		variablesCollection = new VariablesCollection(folderTitleMap, fileDescrMap, width, path, frame, cAlbum, cFiles, export, languageMap, rAlbum);
 		
 		cAlbumDialog = new CreateAlbumDialog(variablesCollection);
 		variablesCollection.cAlbumDialog = cAlbumDialog;

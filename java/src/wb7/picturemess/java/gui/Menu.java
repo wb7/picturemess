@@ -42,13 +42,13 @@ public class Menu extends JMenuBar{
 		
 		super();
 		
-		//Creates the JMenue File and set Alt+F as mnemonic
-		JMenu file = new JMenu(variablesCollection.languageMap.get("menue->file"));
+		//Creates the JMenu File and set Alt+F as mnemonic
+		JMenu file = new JMenu(variablesCollection.languageMap.get("menu->file"));
 		file.setMnemonic(KeyEvent.VK_F);
 		add(file);
 		
-		//Creates the JMenueItem New album and set CTRL+N as mnemonic
-		JMenuItem createAlbumItem = new JMenuItem(variablesCollection.languageMap.get("menue->new album"), KeyEvent.VK_N);
+		//Creates the JMenuItem New album and set CTRL+N as mnemonic
+		JMenuItem createAlbumItem = new JMenuItem(variablesCollection.languageMap.get("menu->new album"), KeyEvent.VK_N);
 		createAlbumItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		//Adds the ActionListener
 		createAlbumItem.addActionListener(new ActionListener() {
@@ -58,8 +58,8 @@ public class Menu extends JMenuBar{
 		});
 		file.add(createAlbumItem);
 		
-		//Creates the JMenueItem Update xmls and set CTRL+U as mnemonic
-		JMenuItem updateXmlsItem = new JMenuItem(variablesCollection.languageMap.get("menue->update"), KeyEvent.VK_U);
+		//Creates the JMenuItem Update xmls and set CTRL+U as mnemonic
+		JMenuItem updateXmlsItem = new JMenuItem(variablesCollection.languageMap.get("menu->update"), KeyEvent.VK_U);
 		updateXmlsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, ActionEvent.CTRL_MASK));
 		//Adds the ActionListener
 		updateXmlsItem.addActionListener(new ActionListener() {
@@ -79,8 +79,8 @@ public class Menu extends JMenuBar{
 		});
 		file.add(updateXmlsItem);
 		
-		//Creates the JMenueItem Export and set CTRL+E as mnemonic
-		JMenuItem exportItem = new JMenuItem(variablesCollection.languageMap.get("menue->export"), KeyEvent.VK_E);
+		//Creates the JMenuItem Export and set CTRL+E as mnemonic
+		JMenuItem exportItem = new JMenuItem(variablesCollection.languageMap.get("menu->export"), KeyEvent.VK_E);
 		exportItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
 		//Adds the ActionListener
 		exportItem.addActionListener(new ActionListener() {
@@ -100,8 +100,8 @@ public class Menu extends JMenuBar{
 		});
 		file.add(exportItem);
 		
-		//Creates the JMenueItem Show and set ALT+S as mnemonic
-		JMenuItem showItem = new JMenuItem(variablesCollection.languageMap.get("menue->show"), KeyEvent.VK_S);
+		//Creates the JMenuItem Show and set ALT+S as mnemonic
+		JMenuItem showItem = new JMenuItem(variablesCollection.languageMap.get("menu->show"), KeyEvent.VK_S);
 		showItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
 		//Adds the ActionListener
 		showItem.addActionListener(new ActionListener() {
@@ -121,13 +121,13 @@ public class Menu extends JMenuBar{
 		});
 		file.add(showItem);
 		
-		//Creates the JMenue Album and set Alt+A as mnemonic
-		JMenu album = new JMenu(variablesCollection.languageMap.get("menue->album"));
+		//Creates the JMenu Album and set Alt+A as mnemonic
+		JMenu album = new JMenu(variablesCollection.languageMap.get("menu->album"));
 		album.setMnemonic(KeyEvent.VK_A);
 		add(album);
 		
-		//Creates the JMenueItem Update xml(s) and set ALT+U as mnemonic
-		JMenuItem albumUpdateItem = new JMenuItem(variablesCollection.languageMap.get("menue->album update"), KeyEvent.VK_U);
+		//Creates the JMenuItem Update xml(s) and set ALT+U as mnemonic
+		JMenuItem albumUpdateItem = new JMenuItem(variablesCollection.languageMap.get("menu->album update"), KeyEvent.VK_U);
 		albumUpdateItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, ActionEvent.ALT_MASK));
 		//Adds the ActionListener
 		albumUpdateItem.addActionListener(new ActionListener() {
@@ -137,9 +137,9 @@ public class Menu extends JMenuBar{
 				boolean succes = true;
 				for (String album : variablesCollection.selectedAlbums) {
 					if(variablesCollection.cFiles.createFiles(album)){
-						System.out.println("Created / changed xml file: " + album);
+						System.out.println("Created / changed file: " + album + ".xml");
 					}else{
-						System.out.println("Something went wrong while exporting file: " + album + " :(");
+						System.out.println("Something went wrong while updating: " + album + ".xml :(");
 						succes = false;
 					}
 				}
@@ -157,6 +157,38 @@ public class Menu extends JMenuBar{
 			}
 		});
 		album.add(albumUpdateItem);
+		
+		//Creates the JMenuItem Remove Album and set CTRL+R as mnemonic
+		JMenuItem albumRemoveItem = new JMenuItem(variablesCollection.languageMap.get("menu->album remove"), KeyEvent.VK_R);
+		albumRemoveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.CTRL_MASK));
+		//Adds the ActionListener
+		albumRemoveItem.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent actionEvent) {
+
+				//Removes selected albums
+				boolean succes = true;
+				for (String album : variablesCollection.selectedAlbums) {
+					if(variablesCollection.rAlbum.removeAlbum(album)){
+						System.out.println("Removed album: " + album);
+					}else{
+						System.out.println("Something went wrong while removing: " + album + " :(");
+						succes = false;
+					}
+				}
+				
+				if (succes) {
+					//Shows a success dialog
+					JOptionPane.showConfirmDialog(variablesCollection.frame, variablesCollection.languageMap.get("succ pane->album rem"), 
+							variablesCollection.languageMap.get("succ title->album rem"), JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				}else{
+					//Shows an error dialog
+					JOptionPane.showConfirmDialog(variablesCollection.frame, variablesCollection.languageMap.get("error pane->album rem"), 
+							variablesCollection.languageMap.get("error title->album rem"), JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		});
+		album.add(albumRemoveItem);
 		
 	}
 	

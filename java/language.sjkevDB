@@ -1,16 +1,16 @@
-menue->file: File
-menue->new album: New album
-menue->update: Update xmls
+menu->file: File
+menu->new album: New album
+menu->update: Update xmls
 error pane->upd: Could not update xmls
 error title->upd: Update failed
 succ pane->upd: All xmls updated
 succ title->upd: Updated
-menue->export: Export
+menu->export: Export
 succ pane->exp: All files exported
 succ title->exp: Exported
 error pane->exp: Could not export files
 error title->exp: Export failed
-menue->show: Show export
+menu->show: Show export
 error pane->show: Could not export files
 error title->show: Could not open the export in your browser.\nDose it exists?
 error pane->show: Opening failed
@@ -21,9 +21,14 @@ cad->folder: Folder:
 cad->descr: Description:
 cad->descr field: An awesome album with great pictures.
 main panel->headline: All albums:
-menue->album: Album
-menue->album update: Update xml(s)
+menu->album: Album
+menu->album update: Update xml(s)
 error pane->album upd: Could not update xml(s)
 error title->album upd: Update failed
-succ pane->album upd: The xml(s) updated
+succ pane->album upd: The xml(s) is/are updated
 succ title->album upd: Updated
+menu->album remove: Remove album(s)
+error pane->album rem: Could not remove album(s)
+error title->album rem: Remove failed
+succ pane->album rem: The album(s) is/are removed
+succ title->album rem: Removed
