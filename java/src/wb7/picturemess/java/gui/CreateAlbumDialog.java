@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013 vilaureu
+ *  Copyright 2013, 2014 vilaureu
  *   
  *     This file is part of picturemess.
  *
@@ -161,12 +161,16 @@ public class CreateAlbumDialog{
 		//Creates the album and checks if all is ok
 		if(variablesCollection.cAlbum.createAlbum(folder, title, description)){
 			
+			//Updates the MainPanel and the folderTitleMap
+			variablesCollection.update.updateAlbumsXml();
+			
 			//Opens a success-dialog
 			JOptionPane.showConfirmDialog(dialog, "Album \"" + folder + "\" created.", "Album created", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			
 			//Outputs a message of success
 			System.out.println("creates album " + folder);
-		
+			System.out.println();
+			
 			//Closes the dialog
 			dialog.dispose();
 			
@@ -177,6 +181,7 @@ public class CreateAlbumDialog{
 			
 			//Outputs an error-message
 			System.out.println("Something went wrong while creating an album! :(");
+			System.out.println();
 			
 		}
 		

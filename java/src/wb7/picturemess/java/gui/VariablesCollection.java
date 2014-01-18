@@ -29,6 +29,7 @@ import javax.swing.JFrame;
 import wb7.picturemess.java.core.CreateAlbum;
 import wb7.picturemess.java.core.CreateFiles;
 import wb7.picturemess.java.core.Export;
+import wb7.picturemess.java.core.Init;
 import wb7.picturemess.java.core.RemoveAlbum;
 
 public class VariablesCollection {
@@ -46,11 +47,14 @@ public class VariablesCollection {
 	public CreateAlbumDialog cAlbumDialog;
 	public Menu menu;
 	public RemoveAlbum rAlbum;
+	public Init init;
+	public Update update;
+	public PaneController paneController;
 
 	//A Collection for variables
 	public VariablesCollection(HashMap<String, String[]> folderTitleMap, HashMap<String,
 			HashMap<String, String>> fileDescrMap, int width, String path, JFrame frame, CreateAlbum cAlbum, CreateFiles cFiles,
-			Export export, LinkedHashMap<String, String> languageMap, RemoveAlbum rAlbum) {
+			Export export, LinkedHashMap<String, String> languageMap, RemoveAlbum rAlbum, Init init) {
 		
 		this.folderTitleMap = folderTitleMap;
 		this.fileDescrMap = fileDescrMap;
@@ -62,6 +66,7 @@ public class VariablesCollection {
 		this.export = export;
 		this.languageMap = languageMap;
 		this.rAlbum = rAlbum;
+		this.init = init;
 		
 	}
 

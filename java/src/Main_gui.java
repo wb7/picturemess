@@ -33,6 +33,7 @@ import wb7.picturemess.java.core.RemoveAlbum;
 import wb7.picturemess.java.gui.CreateAlbumDialog;
 import wb7.picturemess.java.gui.Menu;
 import wb7.picturemess.java.gui.PaneController;
+import wb7.picturemess.java.gui.Update;
 import wb7.picturemess.java.gui.VariablesCollection;
 
 public class Main_gui {
@@ -49,6 +50,7 @@ public class Main_gui {
 	private static LinkedHashMap<String, String> languageMap;
 	private static VariablesCollection variablesCollection;
 	private static RemoveAlbum rAlbum;
+	private static Init init;
 
 	public static void main(String[] args) {
 		
@@ -70,7 +72,10 @@ public class Main_gui {
 		export = new Export(path, fileDescrMap, folderTitleMap, width);
 		rAlbum = new RemoveAlbum(path, folderTitleMap);
 		
-		variablesCollection = new VariablesCollection(folderTitleMap, fileDescrMap, width, path, frame, cAlbum, cFiles, export, languageMap, rAlbum);
+		variablesCollection = new VariablesCollection(folderTitleMap, fileDescrMap, width, path, frame, cAlbum, cFiles, export, languageMap, rAlbum, init);
+		
+		Update update = new Update(variablesCollection);
+		variablesCollection.update = update;
 		
 		cAlbumDialog = new CreateAlbumDialog(variablesCollection);
 		variablesCollection.cAlbumDialog = cAlbumDialog;
@@ -82,7 +87,7 @@ public class Main_gui {
 	
 	private static void init() {
 		
-		Init init = new Init();
+		init = new Init();
 		
 		//Loads the config.xml. Returns an error if something went wrong.
 		if (init.loadConfig())
@@ -137,6 +142,7 @@ public class Main_gui {
 		
 		//Creates a PaneController that controls the JPanels and the JScrollPane
 		PaneController paneController = new PaneController(variablesCollection);
+		variablesCollection.paneController = paneController;
 		
 		//Adds the JScrollPane from the paneController and validates the frame
 		frame.add(paneController);

@@ -20,36 +20,25 @@
 
 package wb7.picturemess.java.gui;
 
-import javax.swing.JScrollPane;
+public class Update {
 
-@SuppressWarnings("serial")
-public class PaneController extends JScrollPane{
-
-	private MainPanel mainPanel;
 	private VariablesCollection variablesCollection;
 
-	public PaneController(VariablesCollection variablesCollection) {
+	public Update(VariablesCollection variablesCollection) {
 		
 		this.variablesCollection = variablesCollection;
 		
-		//Creates the mainJPanel
-		mainPanel = new MainPanel(variablesCollection);
-		
-		//Sets the mainPanle as View of the JScrollPane
-		setViewportView(mainPanel);
-		
 	}
 	
-	public void updateMainPanel() {
+	public void updateAlbumsXml() {
 		
-		//Removes the old MainPanel
-		remove(mainPanel);
+		variablesCollection.init.folderTitleMap.clear();
 		
-		//Creates a new MainPanel
-		mainPanel = new MainPanel(variablesCollection);
-
-		//Sets the new mainPanle as View of the JScrollPane
-		setViewportView(mainPanel);
+		variablesCollection.init.initAlbumsxml();
+		
+		variablesCollection.folderTitleMap = variablesCollection.init.folderTitleMap;
+		
+		variablesCollection.paneController.updateMainPanel();
 		
 	}
 	

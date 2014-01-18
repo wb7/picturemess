@@ -169,17 +169,23 @@ public class Menu extends JMenuBar{
 				boolean succes = true;
 				for (String album : variablesCollection.selectedAlbums) {
 					if(variablesCollection.rAlbum.removeAlbum(album)){
-						System.out.println("Removed album: " + album);
+						System.out.println("removed album " + album);
 					}else{
-						System.out.println("Something went wrong while removing: " + album + " :(");
+						System.out.println("Something went wrong while removing " + album + " :(");
 						succes = false;
 					}
 				}
+				System.out.println();
 				
 				if (succes) {
+					
+					//Updates the MainPanel and the folderTitleMap
+					variablesCollection.update.updateAlbumsXml();
+					
 					//Shows a success dialog
 					JOptionPane.showConfirmDialog(variablesCollection.frame, variablesCollection.languageMap.get("succ pane->album rem"), 
 							variablesCollection.languageMap.get("succ title->album rem"), JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					
 				}else{
 					//Shows an error dialog
 					JOptionPane.showConfirmDialog(variablesCollection.frame, variablesCollection.languageMap.get("error pane->album rem"), 
