@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013 vilaureu
+ *  Copyright 2013, 2014 vilaureu
  *   
  *     This file is part of picturemess.
  *
@@ -84,6 +84,9 @@ public class Init {
 		//xml == null if it is started from an other class.
 		if(xml == null){
 			
+			//Clears the fileDescrMap
+			fileDescrMap.clear();
+			
 			//The loop will loads all xmls that contains in the albums.xml.
 			for (String folder : folderTitleMap.keySet()) {
 				fileDescrMap.put(folder, new HashMap<String, String>());
@@ -160,6 +163,9 @@ public class Init {
 		
 		try {
 			 
+			//Clears the folderTitleMap
+			folderTitleMap.clear();
+			
 			//Loads the albums.xml file
 			File file = new File(path + "albums.xml");
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

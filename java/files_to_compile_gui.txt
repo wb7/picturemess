@@ -11,5 +11,6 @@ src/wb7/picturemess/java/gui/PaneController.java
 src/wb7/picturemess/java/gui/VariablesCollection.java
 src/wb7/picturemess/java/gui/Menu.java
 src/wb7/picturemess/java/gui/Update.java
+src/wb7/picturemess/java/gui/InitGui.java
 src/vilaureu/sjkevDB/SjkevDBReader.java
 src/Main_gui.java

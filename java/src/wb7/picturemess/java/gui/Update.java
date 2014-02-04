@@ -30,15 +30,24 @@ public class Update {
 		
 	}
 	
-	public void updateAlbumsXml() {
+	public boolean update() {
 		
-		variablesCollection.init.folderTitleMap.clear();
+		boolean ret = variablesCollection.initGui.init();
 		
-		variablesCollection.init.initAlbumsxml();
+		variablesCollection.path = variablesCollection.initGui.path;
+		variablesCollection.width = variablesCollection.initGui.width;
+		variablesCollection.fileDescrMap = variablesCollection.initGui.fileDescrMap;
+		variablesCollection.folderTitleMap = variablesCollection.initGui.folderTitleMap;
 		
-		variablesCollection.folderTitleMap = variablesCollection.init.folderTitleMap;
+		variablesCollection.paneController.update();
 		
-		variablesCollection.paneController.updateMainPanel();
+		if (ret) {
+			System.out.println("update successfully.");
+		} else {
+			System.out.println("update failed.");
+		}
+		
+		return ret;
 		
 	}
 	
