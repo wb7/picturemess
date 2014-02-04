@@ -39,6 +39,8 @@ public class Update {
 		variablesCollection.fileDescrMap = variablesCollection.initGui.fileDescrMap;
 		variablesCollection.folderTitleMap = variablesCollection.initGui.folderTitleMap;
 		
+		variablesCollection.selectedAlbums.clear();
+		
 		variablesCollection.paneController.update();
 		
 		if (ret) {
