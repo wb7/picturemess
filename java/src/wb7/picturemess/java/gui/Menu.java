@@ -38,6 +38,8 @@ import javax.swing.KeyStroke;
 @SuppressWarnings("serial")
 public class Menu extends JMenuBar{
 
+	public JMenu album;
+
 	public Menu(final VariablesCollection variablesCollection) {
 		
 		super();
@@ -144,10 +146,11 @@ public class Menu extends JMenuBar{
 		});
 		file.add(updateItem);
 		
-		//Creates the JMenu Album and set Alt+A as mnemonic
-		JMenu album = new JMenu(variablesCollection.languageMap.get("menu->album"));
+		//Creates the JMenu Album and set Alt+A as mnemonic and disables it
+		album = new JMenu(variablesCollection.languageMap.get("menu->album"));
 		album.setMnemonic(KeyEvent.VK_A);
 		add(album);
+		album.setEnabled(false);
 		
 		//Creates the JMenuItem Update xml(s) and set ALT+U as mnemonic
 		JMenuItem albumUpdateItem = new JMenuItem(variablesCollection.languageMap.get("menu->album update"), KeyEvent.VK_U);
