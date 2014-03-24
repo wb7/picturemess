@@ -162,7 +162,7 @@ public class CreateAlbumDialog{
 		if(variablesCollection.cAlbum.createAlbum(folder, title, description)){
 			
 			//Updates the MainPanel and the folderTitleMap
-			variablesCollection.update.updateAlbumsXml();
+			variablesCollection.update.update();
 			
 			//Opens a success-dialog
 			JOptionPane.showConfirmDialog(dialog, "Album \"" + folder + "\" created.", "Album created", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);

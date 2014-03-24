@@ -94,7 +94,7 @@ public class AlbumPanel extends JPanel implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		
 		//Checks the ClickCount
-		if(e.getClickCount() == 1){
+		//if(e.getClickCount() == 1){
 			
 			//Checks the colour 
 			if(getBackground().getRed() == 230){
@@ -110,6 +110,9 @@ public class AlbumPanel extends JPanel implements MouseListener{
 				//Adds the album to the selected albums
 				variablesCollection.selectedAlbums.add(folder);
 				
+				//Enables the JMenu album
+				variablesCollection.menu.album.setEnabled(true);
+				
 			}else{
 				
 				//Sets the colour to the default colour
@@ -122,9 +125,13 @@ public class AlbumPanel extends JPanel implements MouseListener{
 				//Removes the album from the selected albums
 				variablesCollection.selectedAlbums.remove(folder);
 				
+				//Disables the JMenu album if no album is selected
+				if(variablesCollection.selectedAlbums.size() == 0)
+					variablesCollection.menu.album.setEnabled(false);
+				
 			}
 			
-		}
+		//}
 		
 	}
 

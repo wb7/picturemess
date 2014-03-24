@@ -38,6 +38,8 @@ import javax.swing.KeyStroke;
 @SuppressWarnings("serial")
 public class Menu extends JMenuBar{
 
+	public JMenu album;
+
 	public Menu(final VariablesCollection variablesCollection) {
 		
 		super();
@@ -121,10 +123,34 @@ public class Menu extends JMenuBar{
 		});
 		file.add(showItem);
 		
-		//Creates the JMenu Album and set Alt+A as mnemonic
-		JMenu album = new JMenu(variablesCollection.languageMap.get("menu->album"));
+
+		//Creates the JMenuItem Update GUI and set F5 as mnemonic
+		JMenuItem updateItem = new JMenuItem(variablesCollection.languageMap.get("menu->gui update"), KeyEvent.VK_F5);
+		updateItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
+		//Adds the ActionListener
+		updateItem.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent actionEvent) {
+
+				//Updates the GUI
+				if (variablesCollection.update.update()) {
+					//Shows a success dialog
+					JOptionPane.showConfirmDialog(variablesCollection.frame, variablesCollection.languageMap.get("succ pane->gui upd"), 
+							variablesCollection.languageMap.get("succ title->gui upd"), JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				}else{
+					//Shows an error dialog
+					JOptionPane.showConfirmDialog(variablesCollection.frame, variablesCollection.languageMap.get("error pane->gui upd"), 
+							variablesCollection.languageMap.get("error title->gui upd"), JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		});
+		file.add(updateItem);
+		
+		//Creates the JMenu Album and set Alt+A as mnemonic and disables it
+		album = new JMenu(variablesCollection.languageMap.get("menu->album"));
 		album.setMnemonic(KeyEvent.VK_A);
 		add(album);
+		album.setEnabled(false);
 		
 		//Creates the JMenuItem Update xml(s) and set ALT+U as mnemonic
 		JMenuItem albumUpdateItem = new JMenuItem(variablesCollection.languageMap.get("menu->album update"), KeyEvent.VK_U);
@@ -177,10 +203,12 @@ public class Menu extends JMenuBar{
 				}
 				System.out.println();
 				
+				//Updates the MainPanel and the folderTitleMap
+				if (!variablesCollection.update.update()) {
+					succes = false;
+				}
+				
 				if (succes) {
-					
-					//Updates the MainPanel and the folderTitleMap
-					variablesCollection.update.updateAlbumsXml();
 					
 					//Shows a success dialog
 					JOptionPane.showConfirmDialog(variablesCollection.frame, variablesCollection.languageMap.get("succ pane->album rem"), 

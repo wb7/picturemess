@@ -40,7 +40,7 @@ public class PaneController extends JScrollPane{
 		
 	}
 	
-	public void updateMainPanel() {
+	public void update() {
 		
 		//Removes the old MainPanel
 		remove(mainPanel);

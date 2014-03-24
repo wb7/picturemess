@@ -28,9 +28,9 @@ import vilaureu.sjkevDB.SjkevDBReader;
 import wb7.picturemess.java.core.CreateAlbum;
 import wb7.picturemess.java.core.CreateFiles;
 import wb7.picturemess.java.core.Export;
-import wb7.picturemess.java.core.Init;
 import wb7.picturemess.java.core.RemoveAlbum;
 import wb7.picturemess.java.gui.CreateAlbumDialog;
+import wb7.picturemess.java.gui.InitGui;
 import wb7.picturemess.java.gui.Menu;
 import wb7.picturemess.java.gui.PaneController;
 import wb7.picturemess.java.gui.Update;
@@ -50,12 +50,18 @@ public class Main_gui {
 	private static LinkedHashMap<String, String> languageMap;
 	private static VariablesCollection variablesCollection;
 	private static RemoveAlbum rAlbum;
-	private static Init init;
+	private static InitGui initGui;
 
 	public static void main(String[] args) {
 		
 		//Loads the config.xml, the albums.xml and the xml files for the albums.
-		init();
+		initGui = new InitGui();
+		initGui.init();
+		
+		path = initGui.path;
+		width = initGui.width;
+		fileDescrMap = initGui.fileDescrMap;
+		folderTitleMap = initGui.folderTitleMap;
 		
 		//Loads the language file
 		SjkevDBReader reader = new SjkevDBReader(new File("language.sjkevDB"));
@@ -72,7 +78,7 @@ public class Main_gui {
 		export = new Export(path, fileDescrMap, folderTitleMap, width);
 		rAlbum = new RemoveAlbum(path, folderTitleMap);
 		
-		variablesCollection = new VariablesCollection(folderTitleMap, fileDescrMap, width, path, frame, cAlbum, cFiles, export, languageMap, rAlbum, init);
+		variablesCollection = new VariablesCollection(folderTitleMap, fileDescrMap, width, path, frame, cAlbum, cFiles, export, languageMap, rAlbum, initGui);
 		
 		Update update = new Update(variablesCollection);
 		variablesCollection.update = update;
@@ -82,44 +88,6 @@ public class Main_gui {
 		
 		//Creates the frame and static includes
 		createFrame();
-		
-	}
-	
-	private static void init() {
-		
-		init = new Init();
-		
-		//Loads the config.xml. Returns an error if something went wrong.
-		if (init.loadConfig())
-			System.out.println("config loaded.");
-		else
-			System.err.println("Something went wrong while loding config! :(");
-		
-		//A clear line for better structure.
-		System.out.println();
-		
-		//Loads the albums.xml. Returns an error if something went wrong.
-		if (init.initAlbumsxml())
-			System.out.println("albums.xml loaded.");
-		else
-			System.err.println("Something went wrong while loding albums.xml! :(");
-		
-		//A clear line for better structure.
-		System.out.println();
-		
-		//Loads the other xmls. Returns an error if something went wrong.
-		if(init.initXmls(null))
-			System.out.println("album xmls loaded.");
-		else
-			System.err.println("Something went wrong while loding album xmls! :(");
-		
-		//A clear line for better structure.
-		System.out.println();
-		
-		path = init.path;
-		width = init.width;
-		fileDescrMap = init.fileDescrMap;
-		folderTitleMap = init.folderTitleMap;
 		
 	}
 
@@ -137,7 +105,7 @@ public class Main_gui {
 		//Function to create the Menu
 		variablesCollection.menu = new Menu(variablesCollection);
 		frame.setJMenuBar(variablesCollection.menu);
-		System.out.println("menu created");
+		System.out.println("menu created.");
 		System.out.println();
 		
 		//Creates a PaneController that controls the JPanels and the JScrollPane

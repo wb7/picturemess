@@ -32,3 +32,8 @@ error pane->album rem: Could not remove album(s)
 error title->album rem: Remove failed
 succ pane->album rem: The album(s) is/are removed
 succ title->album rem: Removed
+menu->gui update: Update GUI
+error pane->gui upd: Could not update GUI
+error title->gui upd: Update failed
+succ pane->gui upd: The GUI is updated
+succ title->gui upd: Updated
