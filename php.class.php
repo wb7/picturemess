@@ -78,13 +78,31 @@ class picturemess {
 		unset($files[1]);
 
 		$file = "";
-
+	
+		$xmlfile = explode("/", $path);
+		$xmlfile = $this->dir . "desc/" . $xmlfile[count($xmlfile) - 1] . ".xml";
+		
+		$xml = simplexml_load_file($xmlfile);
+		
+		//print_r($xml);
+		
 		foreach ($files as $row)
 		{
+			
+			$desc = "";
+			
+			foreach($xml->file as $tmp){
+				
+				if ($tmp->filename == $row){$desc = $tmp->description;}
+				
+			}
+			
 			$file .= "  <file>\r\n";
 			$file .= "    <filename>" . $row . "</filename>\r\n";
-			$file .= "    <description></description>\r\n";
+			$file .= "    <description>" . $desc . "</description>\r\n";
 			$file .= "  </file>\r\n";
+			
+			$desc = "";
 		}
 		
 		return $file;
