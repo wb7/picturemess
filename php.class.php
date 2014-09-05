@@ -409,7 +409,7 @@ class picturemess {
 	public function removeAlbum($folder) {
 
                 if (file_exists($this->dir . "images/" . $folder)) {
-			echo "Will remove $folder.";
+			echo "Will remove $folder.\r\n";
 			unlink($this->dir . "desc/" . $folder . ".xml");
 			$temp = scandir($this->dir . "images/" . $folder);
 			unset($temp[0]);
