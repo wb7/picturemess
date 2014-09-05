@@ -1,5 +1,12 @@
-{INCLUDES}
-<h1>Galerie</h1>
-{LIST}
+<html>
+	<head>
+		{INCLUDES}
+		<title>{GALLERYTITLE}</title>
+	</head>
+	<body>
+		<h1>Galerie</h1>
+		{LIST}
 
-{FOOTER}
+		{FOOTER}
+	</body>
+</html>

@@ -5,11 +5,13 @@ class picturemess {
 	private $dir; //root dir
 	private $content; //Content of XML file (albums)
 	private $xml; //simple xml
+	private $gallerytitle;
 
 	public function __construct($dir = ".")
 	{
 
 		$this->$dir = $dir;
+		$this->gallerytitle = "picturemess";
 
 	}
 
@@ -223,7 +225,10 @@ class picturemess {
 			$index .= $this->templateStrings("index_tile", $array);
 		}
 		
-		$index = array('LIST' => $index);
+		$index = array(
+			'LIST' => $index,
+			'GALLERYTITLE' => $this->gallerytitle,
+		);
 		$index = $this->templateStrings("index", $index);
 		
 		$handle = fopen($this->dir . "output/index.html", "w");
@@ -255,6 +260,7 @@ class picturemess {
 				'TITLE' => $row->title,
 				'DESCRIPTION' => $row->description,
 				'PICTURES' => $pictures,
+				'GALLERYTITLE' => $this->gallerytitle,
 			);
 
 			$page = $this->templateStrings("page", $array);
