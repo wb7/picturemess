@@ -6,12 +6,14 @@ class picturemess {
 	private $content; //Content of XML file (albums)
 	private $xml; //simple xml
 	private $gallerytitle;
+	private $version;
 
-	public function __construct($dir = ".")
+	public function __construct($dir = ".", $title = "picturemess", $version = "php-git")
 	{
 
 		$this->$dir = $dir;
-		$this->gallerytitle = "picturemess";
+		$this->gallerytitle = $title;
+		$this->version = $version;
 
 	}
 
@@ -120,6 +122,7 @@ class picturemess {
 		$file = file_get_contents($this->dir . "tpl/footer.tpl");
 		$file = str_replace("{YEAR}", $year, $file);
 		$file = str_replace("{TIME}", $time, $file);
+		$file = str_replace("{VERSION}", $this->version, $file);
 		
 		return $file;
 	

@@ -1,3 +1,3 @@
-Some license information. This year you can use for Copyright notices: {YEAR}
+<div class="footer-first">Some license information. This year you can use for Copyright notices: {YEAR}</div>
 <br />
-<center>Last build: {TIME}</center>
+<div class="footer-second">Last build: {TIME} - built with picturemess {VERSION}</div>
