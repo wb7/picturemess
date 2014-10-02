@@ -3,6 +3,8 @@
 body {background-color: #ccc;}
 
 h1 {text-align: right; color: #646464; text-transform: lowercase;}
+h1 a {text-decoration: underline; color: #808080;}
+h1 a:hover {text-decoration: underline; color: #646464;}
 
 .footer-first {}
 .footer-second {font-size: 0.65em;}

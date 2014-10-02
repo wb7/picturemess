@@ -4,8 +4,7 @@
 		<title>{TITLE} :: {GALLERYTITLE}</title>
 	</head>
 	<body>
-		<a href="index.html">Back to index</a>
-		<h1>{TITLE}</h1><br />
+		<h1>{TITLE} | <a href="index.html">{GALLERYTITLE}</a></h1><br />
 		<i>{DESCRIPTION}</i>
 		<br />
 		{PICTURES}

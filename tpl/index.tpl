@@ -4,7 +4,7 @@
 		<title>{GALLERYTITLE}</title>
 	</head>
 	<body>
-		<h1>Galerie</h1>
+		<h1>Home | <a href="index.html">{GALLERYTITLE}</a></h1>
 		{LIST}
 
 		{FOOTER}
