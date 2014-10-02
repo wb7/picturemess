@@ -2,7 +2,7 @@
 
 body {background-color: #ccc;}
 
-h1 {text-align: right; color: #646464; font-family: Georgia, Helvetica, Verdana, sans-serif;} /* add lowercase-style and append dot */
+h1 {text-align: right; color: #646464; text-transform: lowercase;}
 
 .footer-first {}
 .footer-second {font-size: 0.65em;}

@@ -13,7 +13,9 @@ include('php.class.php');
 if(!isset($argv[1])){$argv[1] = "";}
 if(!isset($argv[2])){$argv[2] = "";}
 
-$pm = new picturemess($dir, $title, "php-0.1");
+$version = file_get_contents($dir . "/VERSION");
+
+$pm = new picturemess($dir, $title, "php-" . $version);
 $init = $pm->init();
 
 // check init
