@@ -5,4 +5,11 @@
     <date>25th November 2013</date>
     <description>Some pictures from me.</description>
   </album>
+
+  <album>
+    <title>New Album - second_test</title>
+    <folder>second_test</folder>
+    <date>03 October 2014</date>
+    <description>An awesome album with great pictures.</description>
+  </album>
 </albums>
